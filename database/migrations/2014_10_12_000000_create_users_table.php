@@ -45,6 +45,30 @@ class CreateUsersTable extends Migration
          ];
          $user = User::create($user);
 
+         // teacher
+         $teacher =[
+            'name'              => 'Teacher',
+            'email'             => 'teacher@lms.com',
+            'username'          => 'teacher',
+            'note'              => 'Test teacher',
+            'password'          => bcrypt(env('ADMIN_PASSWORD', '')),
+            'status'            => USER_STATUS_ACTIVE,
+            'email_verified_at' => Carbon::now(),
+         ];
+         $teacher = User::create($teacher);
+
+         // student
+         $student =[
+            'name'              => 'Student',
+            'email'             => 'student@lms.com',
+            'username'          => 'student',
+            'note'              => 'Test student',
+            'password'          => bcrypt(env('ADMIN_PASSWORD', '')),
+            'status'            => USER_STATUS_ACTIVE,
+            'email_verified_at' => Carbon::now(),
+         ];
+         $student = User::create($student);
+
     }
 
     /**

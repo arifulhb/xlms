@@ -1,6 +1,9 @@
 <?php
 
+use App\User;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -19,14 +22,14 @@ class CreatePermissionTables extends Migration
         Schema::create($tableNames['permissions'], function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('guard_name');
+            $table->string('guard_name')->nullable();
             $table->timestamps();
         });
 
         Schema::create($tableNames['roles'], function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('guard_name');
+            $table->string('guard_name')->nullable();
             $table->timestamps();
         });
 
@@ -80,6 +83,48 @@ class CreatePermissionTables extends Migration
         });
 
 
+        /**
+         * Create 3 default roles
+         */
+         $role_admin = Role::create(['name' => 'Admin']);
+         $role_teacher = Role::create(['name' => 'Teacher']);
+         $role_student = Role::create(['name' => 'Student']);
+
+         /**
+          * Create associate permissions
+          */
+        $create_user  = Permission::create(['name' => 'Create user']);
+        $edit_user    = Permission::create(['name' => 'Edit user']);
+        $delete_user  = Permission::create(['name' => 'Delete user']);
+        $block_user  = Permission::create(['name' => 'Block user']);
+        $unblock_user  = Permission::create(['name' => 'Unblock user']);
+        $unsuspend_user  = Permission::create(['name' => 'Unsuspend user']);
+
+        $view_report      = Permission::create(['name' => 'View report']);
+
+        $create_course    = Permission::create(['name' => 'Create course']);
+        $edit_course      = Permission::create(['name' => 'Edit course']);
+        $delete_course    = Permission::create(['name' => 'Delete course']);
+
+        $create_quiz  = Permission::create(['name' => 'Create quiz']);
+        $edit_quiz    = Permission::create(['name' => 'Edit quiz']);
+        $delete_quiz  = Permission::create(['name' => 'Delete quiz']);
+
+        $role_admin->givePermissionTo([$create_course, $edit_course, $delete_course, $block_user, $unblock_user, $unsuspend_user,
+                                        $create_course, $edit_course, $delete_course, $create_quiz, $edit_quiz, $delete_quiz,
+                                        $view_report]);
+
+        $role_teacher->givePermissionTo([$create_course, $edit_course, $delete_course, $create_quiz, $edit_quiz, $delete_quiz]);
+
+
+        $admin_user = User::where('email', config('lms.admin'))->first();
+        $admin_user->assignRole($role_admin);
+
+        $teacher_user = User::where('email', 'teacher@lms.com')->first();
+        $teacher_user->assignRole($role_teacher);
+
+        $student_user = User::where('email', 'student@lms.com')->first();
+        $student_user->assignRole($role_student);
 
 
         app('cache')
