@@ -16,6 +16,26 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected $namespace = 'App\Http\Controllers';
 
+
+    /**
+     * Admin Namespace
+     */
+    protected $namespaceAdmin = 'App\Http\Controllers\Admin';
+
+
+
+    /**
+     * Instructor Namespace
+     */
+    protected $namespaceInstructor = 'App\Http\Controllers\Instructor';
+
+
+
+    /**
+     * Student Namespace
+     */
+    protected $namespaceStudent = 'App\Http\Controllers\Student';
+
     /**
      * Define your route model bindings, pattern filters, etc.
      *
@@ -39,7 +59,13 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapAdminRoutes();
+
+        $this->mapInstructorRoutes();
+
+
+        $this->mapStudentRoutes();
+
     }
 
     /**
@@ -70,4 +96,41 @@ class RouteServiceProvider extends ServiceProvider
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
     }
+
+
+    /**
+     * Admin Routes
+     */
+    protected function mapAdminRoutes(){
+
+        Route::prefix('admin')
+        ->namespace($this->namespaceAdmin)
+        ->group(base_path('routes/admin.php'));
+
+    }
+
+
+    /**
+     * Instructor Routes
+     */
+    protected function mapInstructorRoutes(){
+
+        Route::prefix('instructor')
+        ->namespace($this->namespaceInstructor)
+        ->group(base_path('routes/instructor.php'));
+
+    }
+
+
+    /**
+     * Student Routes
+     */
+    protected function mapStudentRoutes(){
+
+        Route::prefix('student')
+        ->namespace($this->namespaceStudent)
+        ->group(base_path('routes/student.php'));
+
+    }
+
 }

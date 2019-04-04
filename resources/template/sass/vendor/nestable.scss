@@ -1,0 +1,174 @@
+// VARIABLES & OVERRIDES
+@import '../variables';
+
+$nestable-primary: $primary !default;
+.nestable {
+  position: relative;
+}
+//
+.nestable-list { display: block; position: relative; margin: 0; padding: 0; list-style: none; }
+.nestable-list .nestable-list {
+  padding-left: 30px;
+  margin-top: $grid-gutter-width/4;
+}
+.nestable-collapsed .nestable-list { display: none; }
+//
+.nestable-item,
+.nestable-empty,
+.nestable-placeholder { display: block; position: relative; }
+.nestable-handle {
+  padding: 10px 15px;
+  background-color: #fff;
+  border: 1px solid $card-border-color;
+  margin-bottom: $grid-gutter-width/4;
+  border-radius: $border-radius;
+}
+
+.nestable-placeholder {
+  @extend .nestable-handle;
+  background-color: darken($body-bg, 8%);
+  border-color: darken($body-bg, 12%);
+}
+
+.nestable-item > button {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  float: left;
+  width: 35px;
+  height: 42px;
+  line-height: 42px;
+  padding: 0;
+  margin-right: 15px;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  &:before {
+    text-indent: 0;
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    right: 0;
+    line-height: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Material Icons';
+    font-size: 18px;
+    content: '\e5d8';
+    top: 2px;
+
+  }
+
+
+  &[data-action="collapse"]:before {
+    font-family: 'Material Icons';
+    font-size: 18px;
+    content: '\e5db';
+    top: 2px;
+  }
+
+  &:focus {
+    outline:none;
+  }
+}
+
+.nestable-item-handle {
+  clear:both;
+  margin-bottom: 5px;
+
+  .nestable-handle {
+    position: absolute;
+        cursor: pointer;
+        width: 35px;
+        height: 46px;
+        line-height: 44px;
+        white-space: nowrap;
+        margin-right: 15px;
+        padding: 0;
+        text-align: center;
+  }
+  .nestable-content {
+    margin-left:42px;
+    padding: 10px 15px;
+    background-color: #fff;
+    border: 1px solid $card-border-color;
+    margin-bottom: $grid-gutter-width/4;
+    border-radius: $border-radius;
+
+  }
+}
+//  padding:0;
+//
+//  clear:both;
+//  .nestable-handle {
+//    position: absolute;
+//    cursor: pointer;
+//    width: 35px;
+//    height: 42px;
+//    line-height: 42px;
+//    white-space: nowrap;
+//    margin-right: 15px;
+//    padding: 0;
+//    text-align: center;
+//  }
+//  .nestable-content {
+//    margin-left: 50px;
+//    width: 100%;
+//  }
+//}
+
+//
+.nestable-drag {
+  position: absolute;
+  pointer-events: none;
+  z-index: 9999;
+  list-style: none;
+}
+.nestable-drag .nestable-item {
+  box-shadow: 2px 4px 6px 0 rgba(0,0,0, .1);
+
+  &.nestable-item-handle {
+    box-shadow: none;
+  }
+}
+
+
+.nestable-handle-primary {
+  .nestable-handle {
+    background-color: $nestable-primary;
+    color: #ffffff;
+    border-color:transparent;
+  }
+}
+
+.list-group.list-group-sp {
+  .list-group-item {
+    margin-bottom: $grid-gutter-width/4;
+    border-radius: $border-radius;
+  }
+}
+.nestable-list-plain {
+
+  .nestable-handle {
+    padding: 2px 4px;
+    margin:0;
+  }
+  .nestable-placeholder {
+    min-height:52px;
+    border-radius: 0;
+    border:0;
+    opacity:.4;
+  }
+}
+
+.nestable-handle i.material-icons {
+  font-size:20px;
+}

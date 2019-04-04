@@ -1,0 +1,128 @@
+// VARIABLES & OVERRIDES
+@import '../variables';
+
+$tree-primary:  $primary !default;
+
+ul.fancytree-container {
+  border: none;
+  padding: 0;
+  list-style: none;
+  &:focus {
+    outline: none;
+  }
+  li {
+    padding: 0 0 3px;
+    &.fancytree-lastsib {
+      padding: 0;
+    }
+    ul {
+      padding-top: 3px;
+      list-style: none;
+    }
+  }
+}
+.fancytree-icon {
+  color: $gray-dark;
+  .fancytree-folder & {
+    color: $tree-primary;
+  }
+}
+.fancytree-expander {
+  color: $gray-dark;
+}
+
+// Inactive tree:
+span.fancytree-node.fancytree-selected { // selected nodes inside inactive tree
+  background-color: #eeeeee;
+  border-color: #eeeeee;
+  span.fancytree-title {
+    background-color: transparent;
+  }
+}
+span.fancytree-node.fancytree-active { // active nodes inside inactive tree
+  background-color: lighten($primary, 42%);
+  .fancytree-icon, .fancytree-expander {
+    color: $gray-dark;
+  }
+}
+// Active tree:
+.fancytree-container.fancytree-treefocus {
+  span.fancytree-node:hover {
+    background-color: #eeeeee;
+    .fancytree-icon, .fancytree-expander {
+      color: $gray-dark;
+    }
+    &.fancytree-folder {
+      .fancytree-icon {
+        color: $tree-primary;
+      }
+    }
+  }
+  span.fancytree-node.fancytree-focused {
+    border-color: $tree-primary;
+  }
+  span.fancytree-node.fancytree-selected {
+    background-color: #eeeeee;
+    border-color: #eeeeee;
+    span.fancytree-title {
+      background-color: transparent;
+    }
+    .fancytree-icon, .fancytree-expander {
+      color: $gray-dark;
+    }
+    &:hover {
+      background-color: darken(#eeeeee, 2%);
+    }
+  }
+  span.fancytree-node.fancytree-active {
+    background-color: $tree-primary;
+    border-color: $tree-primary;
+    .fancytree-title, .fancytree-icon, .fancytree-expander, .fancytree-checkbox {
+      color: #ffffff;
+    }
+    &:hover {
+      background-color: darken($tree-primary, 2%);
+      &.fancytree-folder {
+        .fancytree-icon {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+}
+
+// SIDEBAR DARK SKIN
+.sidebar-skin-dark {
+  ul.fancytree-container {
+    background-color: transparent;
+  }
+
+  span.fancytree-title {
+    color: $gray-dark;
+  }
+
+  // Inactive tree:
+  span.fancytree-node.fancytree-active { // active nodes inside inactive tree
+    background-color: fade($tree-primary, 30%);
+    .fancytree-icon, .fancytree-expander {
+      color: $gray-dark;
+    }
+  }
+
+  // Active tree:
+  .fancytree-container.fancytree-treefocus {
+    span.fancytree-node:hover {
+      background-color: #eeeeee;
+    }
+    span.fancytree-node.fancytree-active {
+      &:hover {
+        background-color: darken($tree-primary, 2%);
+      }
+    }
+  }
+}
+.sidebar {
+  span.fancytree-node {
+    border-radius: 0;
+  }
+}

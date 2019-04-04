@@ -1,0 +1,69 @@
+// VARIABLES & OVERRIDES
+@import '../variables';
+// 
+.dropzone, .dropzone * {
+  box-sizing: border-box;
+  border-color: $border-color;
+  border-radius:3px;
+}
+
+.dropzone {
+  position: relative;
+  margin-bottom: $grid-gutter-width/2;
+  .dz-message {
+    margin: 3rem;
+  }
+  .dz-preview {
+    position: relative;
+    display: inline-block;
+    width: 120px;
+    margin: 0.5em;
+  
+
+    &.dz-file-preview .dz-image {
+      background:#efefef;
+      border-radius: 5px;
+    }
+    .dz-progress {
+      display: block;
+      height: 15px;
+      border: 1px solid $border-color;
+      .dz-upload {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: $success;
+      }
+    }
+
+    .dz-error-message {
+      color: #fff;
+      background: $danger;
+      display: none;
+      &:after {
+        border-bottom-color: $danger;
+      }
+    }
+    &.dz-error {
+      .dz-error-message, .dz-error-mark {
+        display: block;
+      }
+    }
+    &.dz-success {
+      .dz-success-mark {
+      display: block;
+      }
+    }
+
+    .dz-error-mark, .dz-success-mark {
+      position: absolute;
+      display: none;
+      left: 30px;
+      top: 30px;
+      width: 54px;
+      height: 58px;
+      left: 50%;
+      margin-left: -(54px/2);
+    }
+  }
+}
