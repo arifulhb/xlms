@@ -13,7 +13,7 @@
     <!-- Prevent the demo from appearing in search engines (REMOVE THIS) -->
     <meta name="robots" content="noindex">
 
-    @include('parts.app.head')
+    @include('parts.guest.head')
 
 
 </head>
@@ -34,6 +34,6 @@
             </div>
         </div>
     </div>
-    @include('parts.app.footer')
+    @include('parts.guest.footer')
 </body>
 </html>
