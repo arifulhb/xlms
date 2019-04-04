@@ -87,7 +87,7 @@ class CreatePermissionTables extends Migration
          * Create 3 default roles
          */
          $role_admin = Role::create(['name' => 'Admin']);
-         $role_teacher = Role::create(['name' => 'Teacher']);
+         $role_teacher = Role::create(['name' => 'Instructor']);
          $role_student = Role::create(['name' => 'Student']);
 
          /**

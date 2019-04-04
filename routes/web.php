@@ -17,4 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('/login', 'Auth\LoginController@login')->middleware('user.status');
+
 Route::get('/home', 'HomeController@index')->name('home');

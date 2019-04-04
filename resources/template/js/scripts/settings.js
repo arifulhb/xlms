@@ -1,0 +1,1 @@
+import 'ui-learnplus-bootstrap/js/settings'
