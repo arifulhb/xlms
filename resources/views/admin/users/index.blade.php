@@ -11,6 +11,20 @@
                             <h4 class="card-title">Browse users</h4>
                             {{-- <p class="card-subtitle">Filter</p> --}}
                         </div>
+                        <form action="/" method="GET" class="form-horizontal">
+                            {{-- <input name="q" value="" placeholder="Search user" class="form-control">
+                            <button type="submit" class="btn btn-sm btn-default">Search</button> --}}
+
+                            <div class="input-group col-md-4">
+                                    <input class="form-control py-2" type="search" value="search" id="example-search-input">
+                                    <span class="input-group-append">
+                                      <button class="btn btn-outline-secondary" type="button">
+                                          <i class="fa fa-search"></i>
+                                      </button>
+                                    </span>
+                              </div>
+
+                        </form>
                         <a href="{{ route('users.new') }}" class="btn btn-sm btn-primary">
                             <i class="material-icons">person_add</i>&nbsp;Add New
                         </a>
