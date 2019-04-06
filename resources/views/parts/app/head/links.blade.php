@@ -11,4 +11,5 @@
 
     <!-- App CSS -->
     <link type="text/css" href="{{ asset('template/assets/css/app.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('css/custom.css')}}" rel="stylesheet">
     <link type="text/css" href="{{ asset('template/assets/css/app.rtl.css')}}" rel="stylesheet">

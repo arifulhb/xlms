@@ -1,0 +1,7 @@
+.invalid-feedback {
+    border: 1px solid red!important;
+}
+.invalid-feedback input,
+.invalid-feedback select {
+    border : none!important;
+}

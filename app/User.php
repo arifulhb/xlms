@@ -12,6 +12,16 @@ class User extends Authenticatable
     use Notifiable, HasRoles;
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'last_login', 'created_at', 'updated_at',
+    ];
+
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -37,4 +47,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     *
+     */
+    public function getStatusTextAttribute(){
+
+        return USER_STATUS[$this->status];
+
+    }
 }

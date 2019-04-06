@@ -34,7 +34,15 @@
         <!-- Header Layout Content -->
         <div class="mdk-header-layout__content">
             <div data-push data-responsive-width="992px" class="mdk-drawer-layout js-mdk-drawer-layout">
-                @yield('content')
+
+                <div class="mdk-drawer-layout__content page ">
+                    <div class="container-fluid">
+                        @include('parts.app.body.breadcrumb')
+                        @include('parts.app.body.headline')
+                        @yield('content')
+                    </div>
+                </div>
+
                 @include('parts.app.navigation.navbar')
             </div>
         </div>
