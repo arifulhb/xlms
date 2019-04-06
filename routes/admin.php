@@ -4,7 +4,7 @@
 /**
  * User Management
  */
-Route::group(['prefix' => 'users', 'as' => 'users.'], function(){
+Route::group(['prefix' => 'users', 'as' => 'users.', 'middleware' => 'role:Admin'], function(){
 
     Route::get('/', 'UserController@index')->name('all');
     Route::get('/search', 'UserController@search')->name('search');

@@ -135,6 +135,35 @@ class UserController extends Controller
 
     public function updateField(Request $request, $id){
 
+        // @todo verify if the user has permission to update status
+
+        $post = $request->all();
+
+        $user = User::find($id);
+
+        if($post['field'] == 'role'){
+
+            // remove current roles
+            foreach($user->roles as $role){
+                $user->removeRole($role->name);
+            }
+
+            $user->assignRole($post['role']);
+            Session::flash('message', 'User role updated!');
+
+        }
+        else if($post['field'] == 'status'){
+
+            $user->status = $post['status'];
+            $user->save();
+
+            Session::flash('message', 'User status updated!');
+
+        }
+
+        Session::flash('alert-class', 'alert-success');
+
+        return redirect()->route('users.edit', ['id'=> $id]);
 
     }
 
