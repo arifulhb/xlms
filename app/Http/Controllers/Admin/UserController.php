@@ -35,6 +35,7 @@ class UserController extends Controller
 
         $return['title'] = 'Users';
         $return['users'] = $users;
+        $return['roles'] = Role::all();
 
         return view('admin.users.index', $return);
     }
@@ -128,9 +129,15 @@ class UserController extends Controller
         return view('admin.users.edit', $return);
     }
 
+    /**
+     * @param int $id
+     */
     public function delete($id){
 
+        $user = User::find($id);
+        $user->delete();
 
+        return response()->json(['message'=>'deleted'])->setStatusCode(204);
     }
 
     public function updateField(Request $request, $id){
@@ -167,8 +174,24 @@ class UserController extends Controller
 
     }
 
+    /**
+     *
+     */
+    public function filter(Request $request){
+
+
+        dd($request->all());
+
+    }
+
+    /**
+     *
+     */
     public function search(Request $request){
 
+        $keyword = $request->input('q');
+
+        dd($keyword);
 
     }
 }

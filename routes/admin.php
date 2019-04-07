@@ -9,11 +9,13 @@ Route::group(['prefix' => 'users', 'as' => 'users.', 'middleware' => 'role:Admin
     Route::get('/', 'UserController@index')->name('all');
     Route::get('/search', 'UserController@search')->name('search');
     Route::get('/new', 'UserController@add')->name('new');
+    Route::get('/filter', 'UserController@filter')->name('filter');
     Route::get('/{id}', 'UserController@show')->name('edit');
+
     Route::post('/', 'UserController@insert')->name('insert');
     Route::put('/{id}', 'UserController@update')->name('update');
     Route::put('/{id}/field', 'UserController@updateField')->name('field.update');
-    Route::delete('/$id}', 'UserController@delete')->name('delete');
+    Route::delete('/{id}', 'UserController@delete')->name('delete');
 
 });
 
