@@ -117,4 +117,5 @@
     <!-- List.js -->
     {{-- <script src="{{ asset('template/assets/vendor/list.min.js') }}"></script> --}}
     {{-- <script src="{{ asset('template/assets/js/list.js') }}"></script> --}}
+    <script src="{{ asset('js/toast.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>

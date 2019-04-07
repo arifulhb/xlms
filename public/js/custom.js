@@ -77,17 +77,27 @@ $(document).ready(function(){
             },
         }).done(function(response, textStatus, xhr){
 
-            console.log('response ', response);
+            if (xhr.status === 200){
+                $.toast({
+                    heading: 'Success',
+                    text: 'Password Reset Mail Sent',
+                    position: 'top-right',
+                    icon: 'success',
+                    showHideTransition: 'slide',
+                    loader: true,        // Change it to false to disable loader
+                    loaderBg: '#383b3d'  // To change the background
+                });
+            }
 
         }).fail(function(xhr, textStatus, errorThrown){
 
-            $('#row_'+id).removeClass('bg-warning');
-            $('#user_delete_modal .btn-danger').removeProp('disabled');
-
-        }).always(function(){
-
-            $('#user_delete_modal .btn-danger').removeAttr('disabled');
-
+            $.toast({
+                heading: 'Error',
+                text:  errorThrown,
+                icon: 'error',
+                loader: true,        // Change it to false to disable loader
+                loaderBg: '#9EC600'  // To change the background
+            });
         });
 
     });
