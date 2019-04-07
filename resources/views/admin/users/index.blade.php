@@ -11,11 +11,11 @@
                 <h4 class="card-title">Browse users</h4>
                 {{-- <p class="card-subtitle">Filter</p> --}}
             </div>
-            <form action="{{ route('users.search') }}" method="GET" class="form-horizontal">
+            <form action="{{ route('users.all') }}" method="GET" class="form-horizontal">
                     <!-- Actual search box -->
                 <div class="input-group pr-3">
                     <input class="form-control py-2 border-right-0 border" placeholder="Search user"
-                        type="search" value="" name="q">
+                    type="search" value="{{ \Request::get('q') }}" name="q">
                     <span class="input-group-append">
                         <button class="btn btn-outline-secondary border-left-0 border" type="submit">
                             <i class="fa fa-search"></i>
@@ -43,7 +43,7 @@
                                 <th class="text-right">Action</th>
                             </tr>
                             <tr>
-                                <form method="GET" action="{{ route('users.filter') }}">
+                                <form method="GET" action="{{ route('users.all') }}">
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -51,7 +51,8 @@
                                     <select name="role" class="form-control">
                                         <option disabled selected>Select a role</option>
                                         @foreach($roles as $role)
-                                            <option value="{{ $role->name }}"> {{ $role->name}} </option>
+                                            <option value="{{ $role->name }}" {{ \Request::get('role') == $role->name ? 'selected' : '' }}
+                                                > {{ $role->name}} </option>
                                         @endforeach
                                         <option  value="">None</option>
                                     </select>
@@ -60,7 +61,8 @@
                                     <select name="status" class="form-control">
                                         <option disabled selected>Select a status</option>
                                         @foreach(USER_STATUS as $key => $status)
-                                            <option value="{{ $key }}"> {{ $status }} </option>
+                                            <option value="{{ $key }}"
+                                                {{ \Request::get('status') !== null &&  \Request::get('status') == $key ? 'selected' : '' }}>{{ $status }} </option>
                                         @endforeach
                                         <option  value="">None</option>
                                     </select>

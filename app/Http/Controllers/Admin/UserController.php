@@ -27,11 +27,45 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $users = User::orderBy('updated_at', 'desc')
+
+        if ($request->has('role') || $request->has('status') || $request->has('q')){
+
+            $fields = $request->all();
+
+            $users = User::with(['roles'])
+                ->orderBy('updated_at', 'desc')
+                ->where(function($query) use($fields) {
+
+                if (isset($fields['status'])){
+                    $query->where('status', $fields['status']);
+                }
+
+
+                if (isset($fields['role'])) {
+                    $query->whereHas('roles', function($q) use($fields){
+                        $q->where('name', $fields['role']);
+                    });
+                }
+
+                if(isset($fields['q'])){
+                    $query->where('name', 'like', '%'.$fields['q'].'%')
+                    ->orWhere('email', 'like', '%'.$fields['q'].'%');
+                }
+
+                return $query;
+
+            })->paginate(10);
+
+        } else {
+
+            $users = User::with(['roles'])
+            ->orderBy('updated_at', 'desc')
             ->paginate(10);
+
+        }
 
         $return['title'] = 'Users';
         $return['users'] = $users;

@@ -7,9 +7,9 @@
 Route::group(['prefix' => 'users', 'as' => 'users.', 'middleware' => 'role:Admin'], function(){
 
     Route::get('/', 'UserController@index')->name('all');
-    Route::get('/search', 'UserController@search')->name('search');
+    // Route::get('/search', 'UserController@search')->name('search');
     Route::get('/new', 'UserController@add')->name('new');
-    Route::get('/filter', 'UserController@filter')->name('filter');
+    // Route::get('/filter', 'UserController@filter')->name('filter');
     Route::get('/{id}', 'UserController@show')->name('edit');
 
     Route::post('/', 'UserController@insert')->name('insert');
