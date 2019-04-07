@@ -132,7 +132,8 @@
         </div>
     </div>
 </div>
-
 @endsection
 
+@push('footer-html')
 @include('admin.users.delete_modal')
+@endpush

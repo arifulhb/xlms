@@ -50,6 +50,7 @@
 
     @include('parts.app.footer.index')
 
+    @stack('footer-html')
 </body>
 
 </html>

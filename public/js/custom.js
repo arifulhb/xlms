@@ -103,4 +103,8 @@ $(document).ready(function(){
     });
 
 
+    $('.modal').on('hidden.bs.modal', function () {
+        $('tr').removeClass('bg-warning');
+    });
+
 });
