@@ -47,7 +47,7 @@ class ResetPasswordNotification extends Notification
         $link = url( "/password/reset/" . $this->token );
 
         return (new MailMessage)
-                    ->from(env('MAIL_FROM'))
+                    ->from(env('MAIL_FROM'), env('MAIL_USERNAME'))
                     ->subject('Your password reset request')
                     ->markdown('vendor.notifications.email', ['actionUrl' => $link, 'actionText' => 'Reset Password']);
     }
