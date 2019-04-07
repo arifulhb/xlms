@@ -101,15 +101,23 @@
                                     </td>
                                     <td class="text-right">
 
-                                        <div class="btn-group btn-group-sm" role="group" aria-label="">
-                                            <a class="btn btn-primary btn-xs" data-title="Edit"
-                                                href="{{ route('users.edit', ['id' => $user->id]) }}">
-                                                <span class="material-icons">create</span>
+                                        <div class="btn-group">
+                                            <a class="btn btn-sm btn-primary dropdown-toggle" id="dropdownMenuLink"
+                                                data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                                                aria-expanded="false">Action
                                             </a>
-                                            <button class="btn btn-danger btn-xs btn-delete-user" data-title="Delete" data-toggle="modal"
-                                                data-target="#user_delete_modal" data-id="{{ $user->id }}" data-name="{{ $user->name }}">
-                                                <span class="material-icons">remove_circle_outline</span>
-                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" data-title="Edit" href="{{ route('users.edit', ['id' => $user->id]) }}">Edit</a>
+                                                <a class="dropdown-item btn-reset-password" data-title="Reset Password" data-email="{{ $user->email}}" href="javascript:void(0)"
+                                                    data-href="{{ route('users.edit', ['id' => $user->id]) }}">Reset password</a>
+                                                <div class="dropdown-divider"></div>
+                                                <button class="dropdown-item btn-delete-user"
+                                                    data-title="Delete" data-toggle="modal"
+                                                    data-target="#user_delete_modal" data-id="{{ $user->id }}" data-name="{{ $user->name }}">
+                                                    {{-- <span class="material-icons">remove_circle_outline</span> Delete --}}
+                                                    Delete
+                                                </button>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>

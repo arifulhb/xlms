@@ -63,5 +63,34 @@ $(document).ready(function(){
     });
 
 
+    $('.btn-reset-password').click(function(){
+
+        var email = $(this).attr('data-email');
+
+        console.log('reset for ', email);
+
+        $.ajax({
+            url: '/admin-reset-password',
+            type: 'post',
+            data: {
+                "email": email,
+            },
+        }).done(function(response, textStatus, xhr){
+
+            console.log('response ', response);
+
+        }).fail(function(xhr, textStatus, errorThrown){
+
+            $('#row_'+id).removeClass('bg-warning');
+            $('#user_delete_modal .btn-danger').removeProp('disabled');
+
+        }).always(function(){
+
+            $('#user_delete_modal .btn-danger').removeAttr('disabled');
+
+        });
+
+    });
+
 
 });

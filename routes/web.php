@@ -19,4 +19,6 @@ Auth::routes();
 
 Route::post('/login', 'Auth\LoginController@login')->middleware('user.status');
 
+
+Route::post('/admin-reset-password', 'Auth\AdminResetPasswordController@adminResetPassword');
 Route::get('/home', 'HomeController@index')->name('home');
