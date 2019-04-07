@@ -36,4 +36,18 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function maxAttempts()
+    {
+        //Lock out on 5th Login Attempt
+        return 3;
+    }
+
+    public function decayMinutes()
+    {
+        //Lock for 5 minutes
+        return 5;
+    }
+
+
 }

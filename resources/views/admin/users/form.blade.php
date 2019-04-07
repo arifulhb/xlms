@@ -73,7 +73,7 @@
                                     </div>
                                 </div>
                                 <input type="email" id="email" class="form-control" name="email"
-                                placeholder="Email Address" value="{{ old('email') ? old('email') :  '' }}">
+                                placeholder="Email Address" value="{{ old('email') ? old('email') :  isset($user) ? $user->email : '' }}">
                             </div>
                             @if ($errors->has('email'))
                                 <small class="form-text text-warning">{{ $errors->first('email') }}</small>

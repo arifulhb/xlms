@@ -14,9 +14,16 @@
                         </div>
                         <select class="form-control" id="status" name="status">
                             <option disabled>Select a status</option>
-                            @foreach(USER_STATUS as $key => $status)
-                                <option value="{{ $key}}" {{ $key == $user->status ? 'SELECTED' : ''}} > {{ $status }} </option>
-                            @endforeach
+                            @if($user->status == USER_STATUS_SUSPENDED )
+                                <option value="{{ USER_STATUS_PENDING }}" {{ USER_STATUS_PENDING == $user->status ? 'SELECTED' : ''}} > {{ USER_STATUS[USER_STATUS_PENDING] }} </option>
+                                <option value="{{ USER_STATUS_BLOCKED }}" {{ USER_STATUS_BLOCKED == $user->status ? 'SELECTED' : ''}} > {{ USER_STATUS[USER_STATUS_BLOCKED] }} </option>
+                            @else
+                                @foreach(USER_STATUS as $key => $status)
+                                    @if($key !== $user->status)
+                                    <option value="{{ $key}}" {{ $key == $user->status ? 'SELECTED' : ''}} > {{ $status }} </option>
+                                    @endif
+                                @endforeach
+                            @endif
 
                         </select>
                     </div>

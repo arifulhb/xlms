@@ -9,6 +9,8 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\UserIsUnsuspendedNotification;
 
 class UserController extends Controller
 {
@@ -195,10 +197,26 @@ class UserController extends Controller
         }
         else if($post['field'] == 'status'){
 
+            $previous_status = $user->status;
             $user->status = $post['status'];
             $user->save();
 
-            Session::flash('message', 'User status updated!');
+
+            if ($previous_status == \USER_STATUS_SUSPENDED){
+                // @TODO notifiy user with a password reset link, that will make the user to pending status
+                // $user->notify(new UserIsUnsuspendedNotification());
+                Notification::send($user, new UserIsUnsuspendedNotification());
+
+
+                Session::flash('message', 'User status updated and notification email is sent!');
+
+            } elseif($previous_status == USER_STATUS_BLOCKED){
+                // @TODO notifiy user that s/he is unblocked now. And Give the new status
+
+            } else {
+                Session::flash('message', 'User status updated!');
+            }
+
 
         }
 
