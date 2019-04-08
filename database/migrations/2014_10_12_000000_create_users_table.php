@@ -48,7 +48,7 @@ class CreateUsersTable extends Migration
          // teacher
          $teacher =[
             'name'              => 'Teacher',
-            'email'             => 'teacher@lms.com',
+            'email'             => 'teacher@xlms.com',
             'username'          => 'teacher',
             'note'              => 'Test teacher',
             'password'          => bcrypt(env('ADMIN_PASSWORD', '')),
@@ -60,7 +60,7 @@ class CreateUsersTable extends Migration
          // student
          $student =[
             'name'              => 'Student',
-            'email'             => 'student@lms.com',
+            'email'             => 'student@xlms.com',
             'username'          => 'student',
             'note'              => 'Test student',
             'password'          => bcrypt(env('ADMIN_PASSWORD', '')),
