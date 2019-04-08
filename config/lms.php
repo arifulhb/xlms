@@ -64,13 +64,13 @@ return [
                 ],
                 [
                     'name'  => 'Department',
-                    'href'  => '/admin/department',
+                    'href'  => '/admin/departments',
                     'icon'  => 'assignment_ind',
                     'can'   => 'Admin'
                 ],
                 [
                     'name'  => 'Role',
-                    'href'  => '/admin/role',
+                    'href'  => '/admin/job-roles',
                     'icon'  => 'build',
                     'can'   => 'Admin'
                 ]

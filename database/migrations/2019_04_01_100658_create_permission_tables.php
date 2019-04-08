@@ -120,10 +120,10 @@ class CreatePermissionTables extends Migration
         $admin_user = User::where('email', config('lms.admin'))->first();
         $admin_user->assignRole($role_admin);
 
-        $teacher_user = User::where('email', 'teacher@lms.com')->first();
+        $teacher_user = User::where('email', 'teacher@xlms.com')->first();
         $teacher_user->assignRole($role_teacher);
 
-        $student_user = User::where('email', 'student@lms.com')->first();
+        $student_user = User::where('email', 'student@xlms.com')->first();
         $student_user->assignRole($role_student);
 
 

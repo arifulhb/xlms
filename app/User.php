@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Department;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -55,6 +56,25 @@ class User extends Authenticatable
     public function getStatusTextAttribute(){
 
         return USER_STATUS[$this->status];
+
+    }
+
+
+    /**
+     *
+     */
+    public function departments() {
+
+        return $this->belongsToMany(Department::class, 'user_department_pivot', 'user_id', 'department_id');
+    }
+
+
+    /**
+     *
+     */
+    public function jobRoles() {
+
+        return $this->belongsToMany(jobRoles::class, 'user_jobrole_pivot', 'user_id', 'job_role_id');
 
     }
 
