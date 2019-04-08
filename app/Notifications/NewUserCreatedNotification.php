@@ -2,26 +2,28 @@
 
 namespace App\Notifications;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ResetPasswordNotification extends Notification implements ShouldQueue
+class NewUserCreatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $token;
+    private $token;
+    private $user;
 
     /**
      * Create a new notification instance.
      *
-     * @params string $token
      * @return void
      */
-    public function __construct($token)
+    public function __construct($token, User $user)
     {
         $this->token = $token;
+        $this->user = $user;
     }
 
     /**
@@ -43,13 +45,22 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        $email = $this->user->email;
+        $actionUrl = url( "/password/reset/$this->token?new=$email");
 
-        $link = url( "/password/reset/" . $this->token );
+        // (ID/Batch No, email, Department/Section, Role
 
         return (new MailMessage)
                     ->from(env('MAIL_FROM'), env('MAIL_SENDER_NAME'))
-                    ->subject('Your password reset request')
-                    ->markdown('vendor.notifications.email', ['actionUrl' => $link, 'actionText' => 'Reset Password']);
+                    ->subject('Congratulations! Welcome to '.env('APP_NAME'). '. Your account is ready')
+                    ->markdown('vendor.notifications.user_registered',
+                        [
+                            'actionUrl' => $actionUrl, 'actionText' => 'Set Password',
+                            'name' => $this->user->name,
+                            'batch_no' => '',
+                            'department' => '',
+                            'role'  => ''
+                        ]);
     }
 
     /**

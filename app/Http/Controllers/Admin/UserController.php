@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use Auth;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Auth\Passwords\PasswordBroker;
+use App\Notifications\NewUserCreatedNotification;
 use App\Notifications\UserIsUnsuspendedNotification;
 
 class UserController extends Controller
@@ -112,7 +116,9 @@ class UserController extends Controller
 
         $user->assignRole($post['role']);
 
-        // @todo send confirmation email to user with password change link
+        $token = app(PasswordBroker::class)->createToken($user);
+        $user->notify(new NewUserCreatedNotification($token, $user));
+
 
         Session::flash('message', 'User created!');
         Session::flash('alert-class', 'alert-success');

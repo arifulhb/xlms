@@ -3,8 +3,17 @@
 @section('content')
 
 <div class="card-header text-center">
-        <h4 class="card-title">Rest Password</h4>
-        <p class="card-subtitle">Reset your account password</p>
+        @php
+            $title = "Reset Password";
+            $subTitle = "Reset your account password";
+            if(Request::input('new') !== ''){
+                $title = "Set Password";
+                $subTitle = "Set your account password";
+                $email = Request::input('new');
+            }
+        @endphp
+        <h4 class="card-title">{{ $title }}</h4>
+        <p class="card-subtitle">{{ $subTitle }}</p>
     </div>
     <div class="card-body">
 
@@ -14,22 +23,6 @@
             <div class="text-body">An email with password reset instructions has been sent to your email address, if it exists on our system.</div>
         </div> --}}
 
-        {{-- <form action="{{ url('/password/email')}} " novalidate="" method="post">
-            {{ csrf_field() }}
-            <div class="form-group">
-                <label class="form-label" for="email">Email address:</label>
-                <div class="input-group input-group-merge">
-                    <input id="email" type="email" name="email" required="" class="form-control form-control-prepended" placeholder="Your email address">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <span class="far fa-envelope"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-block">Send instructions</button>
-        </form> --}}
         <form method="POST" action="{{ route('password.update') }}">
                 @csrf
 
@@ -39,7 +32,8 @@
                     <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                     <div class="col-md-6">
-                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $email ?? old('email') }}" required autofocus>
+                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
+                        value="{{ $email ?? old('email') }}" required autofocus>
 
                         @if ($errors->has('email'))
                             <span class="invalid-feedback" role="alert">

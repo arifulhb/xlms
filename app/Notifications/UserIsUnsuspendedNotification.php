@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class UserIsUnsuspendedNotification extends Notification
+class UserIsUnsuspendedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -44,7 +44,7 @@ class UserIsUnsuspendedNotification extends Notification
         $actionUrl = url( "/password/reset/");
 
         return (new MailMessage)
-                    ->from(env('MAIL_FROM'), env('MAIL_USERNAME'))
+                    ->from(env('MAIL_FROM'), env('MAIL_SENDER_NAME'))
                     ->subject('Congratulations! You are unsuspended now!')
                     ->markdown('vendor.notifications.unsuspended',
                         ['actionUrl' => $actionUrl, 'actionText' => 'Reset Password']);
