@@ -63,6 +63,10 @@ $(document).ready(function(){
     });
 
 
+    /**
+     * From User browser page
+     * admin can do it
+     */
     $('.btn-reset-password').click(function(){
 
         var email = $(this).attr('data-email');
@@ -102,6 +106,58 @@ $(document).ready(function(){
 
     });
 
+
+
+    $('.btn-delete-dept').click(function() {
+
+        var data = {
+            id : $(this).attr('data-id'),
+            name: $(this).attr('data-name')
+        } ;
+
+        console.log('data ', data);
+
+        $('#row_'+data.id).addClass('bg-warning');
+
+        $('#dept_delete_modal .btn-danger').attr('data-id', data.id);
+        $('#dept_delete_modal .modal-body').html("Are you sure to delete <strong class='text-danger'>"+data.name+"</strong>?");
+
+    });
+
+    /**
+     * Department Delete
+     */
+    $('#dept_delete_modal .btn-danger').click(function(){
+
+        $(this).attr('disabled', 'disabled');
+        var id = $(this).attr('data-id');
+        $('#row_'+id).addClass('bg-danger');
+
+        $.ajax({
+            url: '/admin/departments/'+id,
+            type: 'post',
+            data: {
+                "_method": 'DELETE',
+            },
+        }).done(function(response, textStatus, xhr){
+
+            if (xhr.status === 204){
+                $('#dept_delete_modal').modal('hide');
+                setTimeout(function(){
+                    $('#row_'+id).remove();
+                }, 1000);
+            }
+            $('#dept_delete_modal .btn-danger').removeAttr('disabled');
+
+        }).fail(function(xhr, textStatus, errorThrown){
+            $('#row_'+id).removeClass('bg-warning');
+            $('#dept_delete_modal .btn-danger').removeProp('disabled');
+        }).always(function(){
+            $('#dept_delete_modal .btn-danger').removeAttr('disabled');
+        });
+
+
+    });
 
     $('.modal').on('hidden.bs.modal', function () {
         $('tr').removeClass('bg-warning');

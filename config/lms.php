@@ -64,7 +64,7 @@ return [
                 ],
                 [
                     'name'  => 'Department',
-                    'href'  => '/admin/department',
+                    'href'  => '/admin/departments',
                     'icon'  => 'assignment_ind',
                     'can'   => 'Admin'
                 ],
