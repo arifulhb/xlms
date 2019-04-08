@@ -28,3 +28,15 @@ Route::group(['prefix' => 'departments', 'as' => 'dept.'], function(){
     Route::delete('/{id}', 'DepartmentController@delete')->name('delete');
 
 });
+
+
+Route::group(['prefix' => 'job-roles', 'as' => 'jobrole.'], function(){
+
+    Route::get('/', 'JobRoleController@index')->name('all');
+    Route::get('/new', 'JobRoleController@add')->name('new');
+    Route::get('/{id}', 'JobRoleController@show')->name('edit');
+    Route::post('/', 'JobRoleController@insert')->name('insert');
+    Route::put('/{id}', 'JobRoleController@update')->name('update');
+    Route::delete('/{id}', 'JobRoleController@delete')->name('delete');
+
+});

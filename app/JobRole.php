@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobRole extends Model
 {
-    public static $table = "job_roles";
 
     protected $fillable = [
         'name', 'description', 'created_by', 'updated_by'

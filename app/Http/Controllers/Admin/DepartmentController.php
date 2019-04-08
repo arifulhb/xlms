@@ -78,7 +78,6 @@ class DepartmentController extends Controller
 
     public function update(Request $request, int $id){
 
-        // @todo validation required
         $validator = Validator::make($request->all(), [
             'name'      => 'required|string|max:100|unique:departments,name,'.$id,
             'description' => 'sometimes|string|max:256,',

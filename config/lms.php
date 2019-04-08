@@ -70,7 +70,7 @@ return [
                 ],
                 [
                     'name'  => 'Role',
-                    'href'  => '/admin/role',
+                    'href'  => '/admin/job-roles',
                     'icon'  => 'build',
                     'can'   => 'Admin'
                 ]

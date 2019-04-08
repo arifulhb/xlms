@@ -159,6 +159,59 @@ $(document).ready(function(){
 
     });
 
+
+    /**
+     * Job Role Delete Menu button
+     */
+    $('.btn-delete-job-role').click(function() {
+
+        var data = {
+            id : $(this).attr('data-id'),
+            name: $(this).attr('data-name')
+        } ;
+        console.log('data ', data);
+
+        $('#row_'+data.id).addClass('bg-warning');
+        $('#jobroles_delete_modal .btn-danger').attr('data-id', data.id);
+        $('#jobroles_delete_modal .modal-body').html("Are you sure to delete <strong class='text-danger'>"+data.name+"</strong>?");
+
+    });
+
+    /**
+     * Department Delete
+     */
+    $('#jobroles_delete_modal .btn-danger').click(function(){
+
+        $(this).attr('disabled', 'disabled');
+        var id = $(this).attr('data-id');
+        $('#row_'+id).addClass('bg-danger');
+
+        $.ajax({
+            url: '/admin/job-roles/'+id,
+            type: 'post',
+            data: {
+                "_method": 'DELETE',
+            },
+        }).done(function(response, textStatus, xhr){
+
+            if (xhr.status === 204){
+                $('#jobroles_delete_modal').modal('hide');
+                setTimeout(function(){
+                    $('#row_'+id).remove();
+                }, 1000);
+            }
+            $('#jobroles_delete_modal .btn-danger').removeAttr('disabled');
+
+        }).fail(function(xhr, textStatus, errorThrown){
+            $('#row_'+id).removeClass('bg-warning');
+            $('#jobroles_delete_modal .btn-danger').removeProp('disabled');
+        }).always(function(){
+            $('#jobroles_delete_modal .btn-danger').removeAttr('disabled');
+        });
+
+
+    });
+
     $('.modal').on('hidden.bs.modal', function () {
         $('tr').removeClass('bg-warning');
     });
