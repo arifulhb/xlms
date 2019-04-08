@@ -15,11 +15,12 @@
         <div class="text-body">An email with password reset instructions has been sent to your email address, if it exists on our system.</div>
     </div> --}}
 
-    <form action="student-dashboard.html" novalidate="" method="post">
+    <form action="{{ url('/password/email')}} " novalidate="" method="post">
+        {{ csrf_field() }}
         <div class="form-group">
             <label class="form-label" for="email">Email address:</label>
             <div class="input-group input-group-merge">
-                <input id="email" type="email" required="" class="form-control form-control-prepended" placeholder="Your email address">
+                <input id="email" type="email" name="email" required="" class="form-control form-control-prepended" placeholder="Your email address">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <span class="far fa-envelope"></span>

@@ -22,27 +22,22 @@
     <!-- App Settings (safe to remove) -->
     {{-- <script src="{{ asset('template') }}assets/js/app-settings.js"></script> --}}
 
-
-
-
-
-
     <!-- Global Settings -->
-    <script src="{{ asset('template/assets/js/settings.js') }} "></script>
+    {{-- <script src="{{ asset('template/assets/js/settings.js') }} "></script> --}}
 
     <!-- Moment.js -->
     <script src="{{ asset('template/assets/vendor/moment.min.js') }}"></script>
     <script src="{{ asset('template/assets/vendor/moment-range.min.js') }}"></script>
 
     <!-- Chart.js -->
-    <script src="{{ asset('template/assets/vendor/Chart.min.js') }}"></script>
+    {{-- <script src="{{ asset('template/assets/vendor/Chart.min.js') }}"></script> --}}
 
     <!-- UI Charts Page JS -->
-    <script src="{{ asset('template/assets/js/chartjs-rounded-bar.js') }}"></script>
-    <script src="{{ asset('template/assets/js/chartjs.js') }}"></script>
+    {{-- <script src="{{ asset('template/assets/js/chartjs-rounded-bar.js') }}"></script>
+    <script src="{{ asset('template/assets/js/chartjs.js') }}"></script> --}}
 
     <!-- Chart.js Samples -->
-    <script>
+    {{-- <script>
         (function() {
             'use strict';
 
@@ -117,8 +112,10 @@
             Earnings('#earningsChart')
 
         })()
-    </script>
+    </script> --}}
 
     <!-- List.js -->
-    <script src="{{ asset('template/assets/vendor/list.min.js') }}"></script>
-    <script src="{{ asset('template/assets/js/list.js') }}"></script>
+    {{-- <script src="{{ asset('template/assets/vendor/list.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('template/assets/js/list.js') }}"></script> --}}
+    <script src="{{ asset('js/toast.min.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
