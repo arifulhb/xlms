@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Auth;
 use App\User;
+use App\JobRole;
 use Carbon\Carbon;
+use App\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -151,6 +153,10 @@ class UserController extends Controller
         $user->username = $post['username'];
         $user->save();
 
+
+        $user->departments()->syncWithoutDetaching([$post['department']]);
+        $user->jobroles()->syncWithoutDetaching([$post['job_role']]);
+
         Session::flash('message', 'User updated!');
         Session::flash('alert-class', 'alert-success');
 
@@ -161,10 +167,14 @@ class UserController extends Controller
     public function show($id){
 
 
-        $user = User::find($id);
+        $user = User::with(['departments', 'jobroles'])->find($id);
+        $departments =  Department::orderBy('name')->get();
+        $job_roles =  JobRole::orderBy('name')->get();
 
         $return['title'] = 'Edit: '.$user->name;
         $return['user'] = $user;
+        $return['departments'] = $departments;
+        $return['job_roles'] = $job_roles;
         $return['roles'] = Role::all();
 
 

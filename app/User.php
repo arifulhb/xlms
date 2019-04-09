@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\JobRole;
 use App\Department;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -72,9 +73,9 @@ class User extends Authenticatable
     /**
      *
      */
-    public function jobRoles() {
+    public function jobroles() {
 
-        return $this->belongsToMany(jobRoles::class, 'user_jobrole_pivot', 'user_id', 'job_role_id');
+        return $this->belongsToMany(JobRole::class, 'user_jobrole_pivot', 'user_id', 'job_role_id');
 
     }
 

@@ -26,25 +26,14 @@
                     <input type="hidden" name="_method" value="PUT">
                     @endif
 
+                    @component('parts.components.form-group',
+                        ['name' => 'name', 'icon_name' => 'person', 'column' => 'col-sm-8 col-md-6'])
+                        <input type="text" id="name" class="form-control" name="name"
+                        placeholder="Name" value="{{ old('name') ? old('name') : isset($user) ? $user->name : ''}}">
+                    @endcomponent
+
                     <div class="form-group row">
-                        <label for="name" class="col-sm-3 col-form-label form-label">Name</label>
-                        <div class="col-sm-8">
-                            <div class="input-group {{ $errors->has('name') ? 'invalid-feedback'  : '' }}">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="material-icons md-18 text-muted">person</i>
-                                    </div>
-                                </div>
-                                <input type="text" id="name" class="form-control" name="name"
-                                    placeholder="Name" value="{{ old('name') ? old('name') : isset($user) ? $user->name : ''}}">
-                            </div>
-                            @if ($errors->has('name'))
-                                <small class="form-text text-warning">{{ $errors->first('name') }}</small>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="role" class="col-sm-3 col-form-label form-label">Role</label>
+                        <label for="role" class="col-sm-3 col-form-label form-label">Access Role</label>
                         <div class="col-sm-8">
                             <div class="row">
                                 <div class="col-md-6">
@@ -63,57 +52,59 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="email" class="col-sm-3 col-form-label form-label">Email</label>
-                        <div class="col-sm-6 col-md-6">
-                            <div class="input-group {{ $errors->has('email') ? 'invalid-feedback'  : '' }}">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="material-icons md-18 text-muted">mail</i>
-                                    </div>
-                                </div>
-                                <input type="email" id="email" class="form-control" name="email"
-                                placeholder="Email Address" value="{{ old('email') ? old('email') :  isset($user) ? $user->email : '' }}">
-                            </div>
-                            @if ($errors->has('email'))
-                                <small class="form-text text-warning">{{ $errors->first('email') }}</small>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="username" class="col-sm-3 col-form-label form-label">Username</label>
-                        <div class="col-sm-6 col-md-6">
 
-                            <div class="input-group  {{ $errors->has('username') ? 'invalid-feedback'  : '' }}">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="material-icons md-18 text-muted">alternate_email</i>
-                                    </div>
-                                </div>
-                                <input id="username" type="text" class="form-control" name="username"
-                                    placeholder="username" value="{{ old('username') ? old('username') : isset($user) ? $user->username : '' }}">
-                            </div>
-                            @if ($errors->has('username'))
-                                <small class="form-text text-warning">{{ $errors->first('username') }}</small>
-                            @endif
-                        </div>
-                    </div>
+                    @component('parts.components.form-group',
+                        ['name' => 'email', 'icon_name' => 'mail', 'column' => 'col-sm-6 col-md-6'])
+                        <input type="email" id="email" class="form-control" name="email"
+                        placeholder="Email Address" value="{{ old('email') ? old('email') :  isset($user) ? $user->email : '' }}">
+                    @endcomponent
+
+                    @component('parts.components.form-group',
+                        ['name' => 'username', 'icon_name' => 'alternate_email', 'column' => 'col-sm-6 col-md-6'])
+                        <input id="username" type="text" class="form-control" name="username"
+                        placeholder="username" value="{{ old('username') ? old('username') : isset($user) ? $user->username : '' }}">
+                    @endcomponent
+
+
+                    @component('parts.components.form-group',
+                        ['name' => 'department', 'icon_name' => 'business_center', 'column' => 'col-sm-8 col-md-4'])
+                        @php
+                        $user_dept = [];
+                        foreach($user->departments as $item){
+                            array_push($user_dept, $item->id);
+                        }
+                       @endphp
+                        <select class="form-control" name="department" id="department" required>
+                            <option selected disabled>Select a department</option>
+                            @foreach($departments as $department)
+                                <option value="{{ $department->id }}" {{ in_array($department->id, $user_dept) ? 'selected' : '' }} >{{ $department->name }}</option>
+                            @endforeach
+                        </select>
+                    @endcomponent
+
+                    @component('parts.components.form-group',
+                        ['name' => 'job_role', 'icon_name' => 'folder_shared', 'column' => 'col-sm-8 col-md-4'])
+                        @php
+                         $role_ids= [];
+                         foreach($user->jobroles as $item){
+                             array_push($role_ids, $item->id);
+                         }
+                        @endphp
+                        <select class="form-control" name="job_role" id="job_role" required>
+                            <option selected disabled>Select a Job Role</option>
+                            @foreach($job_roles as $job_role)
+                                <option value="{{ $job_role->id }}" {{ in_array($job_role->id, $role_ids) ? 'selected' : '' }} >{{ $job_role->name }}</option>
+                            @endforeach
+                        </select>
+                    @endcomponent
+
+
                     @if(isset($user))
-                    <div class="form-group row">
-                        <label for="status_text" class="col-sm-3 col-form-label form-label">Status</label>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="material-icons md-18 text-muted">check_box</i>
-                                    </div>
-                                </div>
 
-                                    <input type="text" class="form-control" value="{{ isset($user) ? $user->statusText : '' }}" disabled />
-                            </div>
-                        </div>
-
-                    </div>
+                    @component('parts.components.form-group',
+                        ['name' => 'status', 'icon_name' => 'check_box', 'column' => 'col-sm-6 col-md-4'])
+                        <input type="text" class="form-control" value="{{ isset($user) ? $user->statusText : '' }}" disabled />
+                    @endcomponent
                     @endif
 
                     <div class="form-group row">
