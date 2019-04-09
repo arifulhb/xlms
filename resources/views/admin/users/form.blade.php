@@ -1,4 +1,4 @@
-<div class="col-lg-8 col-md-8 col-sm-12">
+<div class="col-lg-8 col-md-8 col-sm-12 js-user-form">
 
     @if(Session::has('message'))
         <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('message') }}</p>
@@ -66,12 +66,15 @@
                     @endcomponent
 
 
+                    <div class="js-admin js-student">
                     @component('parts.components.form-group',
                         ['name' => 'department', 'icon_name' => 'business_center', 'column' => 'col-sm-8 col-md-4'])
                         @php
                         $user_dept = [];
-                        foreach($user->departments as $item){
-                            array_push($user_dept, $item->id);
+                        if(isset($user)){
+                            foreach($user->departments as $item){
+                                array_push($user_dept, $item->id);
+                            }
                         }
                        @endphp
                         <select class="form-control" name="department" id="department" required>
@@ -81,14 +84,18 @@
                             @endforeach
                         </select>
                     @endcomponent
+                    </div>
 
+                    <div class="js-admin js-student">
                     @component('parts.components.form-group',
                         ['name' => 'job_role', 'icon_name' => 'folder_shared', 'column' => 'col-sm-8 col-md-4'])
                         @php
                          $role_ids= [];
-                         foreach($user->jobroles as $item){
-                             array_push($role_ids, $item->id);
-                         }
+                         if(isset($user)){
+                            foreach($user->jobroles as $item){
+                                array_push($role_ids, $item->id);
+                            }
+                        }
                         @endphp
                         <select class="form-control" name="job_role" id="job_role" required>
                             <option selected disabled>Select a Job Role</option>
@@ -97,6 +104,11 @@
                             @endforeach
                         </select>
                     @endcomponent
+                    </div>
+
+                    <div class="js-instructor d-none">
+                        Instructor skills
+                    </div>
 
 
                     @if(isset($user))

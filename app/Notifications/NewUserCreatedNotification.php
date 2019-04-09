@@ -48,7 +48,16 @@ class NewUserCreatedNotification extends Notification implements ShouldQueue
         $email = $this->user->email;
         $actionUrl = url( "/password/reset/$this->token?new=$email");
 
-        // (ID/Batch No, email, Department/Section, Role
+        $departments = [];
+        foreach($user->departments as $item){
+            array_push($departments, $item->name);
+        }
+
+        $jobroles = [];
+        foreach($user->jobroles as $item){
+            array_push($jobroles, $item->name);
+        }
+
 
         return (new MailMessage)
                     ->from(env('MAIL_FROM'), env('MAIL_SENDER_NAME'))
@@ -57,9 +66,10 @@ class NewUserCreatedNotification extends Notification implements ShouldQueue
                         [
                             'actionUrl' => $actionUrl, 'actionText' => 'Set Password',
                             'name' => $this->user->name,
-                            'batch_no' => '',
-                            'department' => '',
-                            'role'  => ''
+                            'batch_no' => $this->user->username,
+                            'department' => implode(',', $departments),
+                            'jobrole'  => implod('', $jobroles),
+                            'role'  => $user->roles->toArray()[0]['name']
                         ]);
     }
 

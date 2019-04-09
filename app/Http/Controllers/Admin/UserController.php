@@ -84,8 +84,13 @@ class UserController extends Controller
 
     public function add(){
 
+        $departments =  Department::orderBy('name')->get();
+        $job_roles =  JobRole::orderBy('name')->get();
+
         $return['title'] = 'Add new User';
         $return['roles'] = Role::all();
+        $return['departments'] = $departments;
+        $return['job_roles'] = $job_roles;
 
         return view('admin.users.insert', $return);
 

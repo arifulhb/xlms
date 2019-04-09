@@ -9,6 +9,13 @@
 # @lang('Hello!') {{ $name}}<br/>
 <p>{{ env('APP_NAME')}} admin has created an account for your in {{ env('APP_NAME')}} application.</p><br/>
 <p>Here is some basic information about your that has been added in your profile.<br/>
+    <p>
+    <span>ID/Bath No: {{ $batch_no }}</span> <br/>
+    @if($role !== 'Teacher')
+    <span>Department: {{ $department }}</span> <br/>
+    <span>Role: {{ $jobrole }}</span> <br/>
+    @endif
+    </p>
     (ID/Batch No, email, Department/Section, Role)
 </p>
 <p>Please follow the <strong>Set Password</strong> button link to set your password for the account.</p>
