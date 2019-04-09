@@ -98,7 +98,9 @@ class UserController extends Controller
 
     public function insert(Request $request){
 
-        $validator = Validator::make($request->all(), [
+        $post = $request->all();
+
+        $validator = Validator::make($post, [
             'email'     => 'required|email|max:100|unique:users,email',
             'name'      => 'required|string|max:100',
             'username'  => 'required|string|max:100|unique:users,username,',
@@ -110,10 +112,7 @@ class UserController extends Controller
         if ($validator->fails()) {
             Session::flash('errors', $validator->messages());
             return redirect()->route('users.new')->withInput();
-       }
-
-
-        $post = $request->all();
+        }
 
         $user = new User();
         $user->name         = $post['name'];
@@ -149,7 +148,8 @@ class UserController extends Controller
     public function update(Request $request, int $id){
 
         // @todo validation required
-        $validator = Validator::make($request->all(), [
+        $post = $request->all();
+        $validator = Validator::make($post, [
             'email'     => 'required|email|max:100|unique:users,email,'.$id,
             'name'      => 'required|string|max:100',
             'username'  => 'required|string|max:100|unique:users,username,'.$id,
@@ -160,7 +160,6 @@ class UserController extends Controller
              return redirect()->back()->withInput();
         }
 
-        $post = $request->all();
         $user = User::find($id);
 
         $role_permission = $user->roles->toArray()[0]['name'];
