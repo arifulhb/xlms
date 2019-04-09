@@ -14,9 +14,10 @@
     @if($role !== 'Teacher')
     <span>Department: {{ $department }}</span> <br/>
     <span>Role: {{ $jobrole }}</span> <br/>
+    @elseif($role == 'Teacher')
+    <span>Experties: {{ $expertise }}</span> <br/>
     @endif
     </p>
-    (ID/Batch No, email, Department/Section, Role)
 </p>
 <p>Please follow the <strong>Set Password</strong> button link to set your password for the account.</p>
 

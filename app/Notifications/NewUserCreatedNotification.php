@@ -69,7 +69,8 @@ class NewUserCreatedNotification extends Notification implements ShouldQueue
                             'batch_no' => $this->user->username,
                             'department' => implode(', ', $departments),
                             'jobrole'  => implode(', ', $jobroles),
-                            'role'  => $this->user->roles->toArray()[0]['name']
+                            'role'  => $this->user->roles->toArray()[0]['name'],
+                            'expertise' => $this->user->expertise
                         ]);
     }
 

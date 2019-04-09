@@ -129,6 +129,12 @@ class UserController extends Controller
 
         $user->assignRole($post['role']);
 
+        if($post['role'] == 'Admin' || $post['role'] == 'Student'){
+            $user->departments()->syncWithoutDetaching([$post['department']]);
+            $user->jobroles()->syncWithoutDetaching([$post['job_role']]);
+        }
+
+
         $token = app(PasswordBroker::class)->createToken($user);
         $user->notify(new NewUserCreatedNotification($token, $user));
 
