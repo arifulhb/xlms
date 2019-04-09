@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Auth;
 use App\User;
+use App\JobRole;
 use Carbon\Carbon;
+use App\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -82,8 +84,13 @@ class UserController extends Controller
 
     public function add(){
 
+        $departments =  Department::orderBy('name')->get();
+        $job_roles =  JobRole::orderBy('name')->get();
+
         $return['title'] = 'Add new User';
         $return['roles'] = Role::all();
+        $return['departments'] = $departments;
+        $return['job_roles'] = $job_roles;
 
         return view('admin.users.insert', $return);
 
@@ -91,20 +98,21 @@ class UserController extends Controller
 
     public function insert(Request $request){
 
-        $validator = Validator::make($request->all(), [
+        $post = $request->all();
+
+        $validator = Validator::make($post, [
             'email'     => 'required|email|max:100|unique:users,email',
             'name'      => 'required|string|max:100',
             'username'  => 'required|string|max:100|unique:users,username,',
-            'role'      => 'required|string'
+            'role'      => 'required|string',
+            'department'=> 'required_if:role,Admin,Student',
+            'job_role'  => 'required_if:role,Admin,Student'
         ]);
 
         if ($validator->fails()) {
             Session::flash('errors', $validator->messages());
             return redirect()->route('users.new')->withInput();
-       }
-
-
-        $post = $request->all();
+        }
 
         $user = new User();
         $user->name         = $post['name'];
@@ -112,9 +120,19 @@ class UserController extends Controller
         $user->username     = $post['username'];
         $user->status       = \USER_STATUS_PENDING;
         $user->password     = bcrypt('secret');
+
+        if($post['role'] == 'Instructor'){
+            $user->expertise     = $post['expertise'];
+        }
         $user->save();
 
         $user->assignRole($post['role']);
+
+        if($post['role'] == 'Admin' || $post['role'] == 'Student'){
+            $user->departments()->syncWithoutDetaching([$post['department']]);
+            $user->jobroles()->syncWithoutDetaching([$post['job_role']]);
+        }
+
 
         $token = app(PasswordBroker::class)->createToken($user);
         $user->notify(new NewUserCreatedNotification($token, $user));
@@ -130,7 +148,8 @@ class UserController extends Controller
     public function update(Request $request, int $id){
 
         // @todo validation required
-        $validator = Validator::make($request->all(), [
+        $post = $request->all();
+        $validator = Validator::make($post, [
             'email'     => 'required|email|max:100|unique:users,email,'.$id,
             'name'      => 'required|string|max:100',
             'username'  => 'required|string|max:100|unique:users,username,'.$id,
@@ -141,15 +160,24 @@ class UserController extends Controller
              return redirect()->back()->withInput();
         }
 
-        $post = $request->all();
-
-
         $user = User::find($id);
+
+        $role_permission = $user->roles->toArray()[0]['name'];
 
         $user->name = $post['name'];
         $user->email = $post['email'];
         $user->username = $post['username'];
+        if($role_permission== 'Instructor'){
+            $user->expertise     = $post['expertise'];
+        }
         $user->save();
+
+
+        if($role_permission== 'Admin' || $role_permission == 'Student'){
+            $user->departments()->syncWithoutDetaching([$post['department']]);
+            $user->jobroles()->syncWithoutDetaching([$post['job_role']]);
+        }
+
 
         Session::flash('message', 'User updated!');
         Session::flash('alert-class', 'alert-success');
@@ -161,10 +189,14 @@ class UserController extends Controller
     public function show($id){
 
 
-        $user = User::find($id);
+        $user = User::with(['departments', 'jobroles'])->find($id);
+        $departments =  Department::orderBy('name')->get();
+        $job_roles =  JobRole::orderBy('name')->get();
 
         $return['title'] = 'Edit: '.$user->name;
         $return['user'] = $user;
+        $return['departments'] = $departments;
+        $return['job_roles'] = $job_roles;
         $return['roles'] = Role::all();
 
 
