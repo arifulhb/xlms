@@ -34,6 +34,9 @@ class LogSuccessfulLogin
         $user = $event->user;
 
         $user->last_login = Carbon::now();
+        if ($user->status === \USER_STATUS_PENDING){
+            $user->status = \USER_STATUS_ACTIVE;
+        }
         $user->save();
 
     }
