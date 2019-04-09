@@ -216,4 +216,28 @@ $(document).ready(function(){
         $('tr').removeClass('bg-warning');
     });
 
+
+    /**
+     * Change the department and role for teacher
+     */
+
+     $('#role').change(function(){
+
+        var user_role = $('#role option:selected').val();
+
+        console.log('role ', user_role);
+
+        if (user_role === 'Admin' || user_role=== 'Student'){
+            $('.js-admin,  .js-student').removeClass('d-none');
+            $('.js-instructor').addClass('d-none');
+        } else if (user_role === 'Instructor'){
+            $('.js-admin,  .js-student').addClass('d-none');
+            $('.js-instructor').removeClass('d-none');
+        }
+
+
+     });
+
+
+
 });

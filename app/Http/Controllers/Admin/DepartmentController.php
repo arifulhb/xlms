@@ -50,7 +50,7 @@ class DepartmentController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name'      => 'required|string|max:100|unique:departments,name',
-            'description' => 'sometimes|string|max:256,',
+            'description' => 'max:256,',
         ]);
 
         if ($validator->fails()) {
