@@ -66,7 +66,13 @@
                     @endcomponent
 
 
-                    <div class="js-admin js-student">
+                    @php
+                        $role_permission = isset($user) ? $user->roles->toArray()[0]['name'] : 'Admin';
+                        $admin_class_name =  isset($user) ? $role_permission == 'Instructor' ? 'd-none' : '' : '';
+                        $instructor_class_name =  isset($user) ? $role_permission == 'Instructor' ? '' : 'd-none' : 'd-none';
+                    @endphp
+
+                    <div class="js-admin js-student {{ $admin_class_name }}">
                     @component('parts.components.form-group',
                         ['name' => 'department', 'icon_name' => 'business_center', 'column' => 'col-sm-8 col-md-4'])
                         @php
@@ -77,8 +83,8 @@
                             }
                         }
                        @endphp
-                        <select class="form-control" name="department" id="department" required>
-                            <option selected disabled>Select a department</option>
+                        <select class="form-control" name="department" id="department">
+                            <option selected disabled value="select">Select a department</option>
                             @foreach($departments as $department)
                                 <option value="{{ $department->id }}" {{ in_array($department->id, $user_dept) ? 'selected' : '' }} >{{ $department->name }}</option>
                             @endforeach
@@ -86,7 +92,7 @@
                     @endcomponent
                     </div>
 
-                    <div class="js-admin js-student">
+                    <div class="js-admin js-student {{ $admin_class_name }}">
                     @component('parts.components.form-group',
                         ['name' => 'job_role', 'icon_name' => 'folder_shared', 'column' => 'col-sm-8 col-md-4'])
                         @php
@@ -97,8 +103,8 @@
                             }
                         }
                         @endphp
-                        <select class="form-control" name="job_role" id="job_role" required>
-                            <option selected disabled>Select a Job Role</option>
+                        <select class="form-control" name="job_role" id="job_role">
+                            <option selected disabled  value="select">Select a Job Role</option>
                             @foreach($job_roles as $job_role)
                                 <option value="{{ $job_role->id }}" {{ in_array($job_role->id, $role_ids) ? 'selected' : '' }} >{{ $job_role->name }}</option>
                             @endforeach
@@ -106,8 +112,12 @@
                     @endcomponent
                     </div>
 
-                    <div class="js-instructor d-none">
-                        Instructor skills
+                    <div class="js-instructor  {{ $instructor_class_name }}">
+                    @component('parts.components.form-group',
+                        ['name' => 'expertise', 'icon_name' => 'highlight', 'column' => 'col-sm-8 col-md-6'])
+                        <input type="text" id="expertise" class="form-control" name="expertise"
+                        placeholder="e.g. Expertise1, Expertise2" value="{{ old('expertise') ? old('expertise') : isset($user) ? $user->expertise : ''}}">
+                    @endcomponent
                     </div>
 
 

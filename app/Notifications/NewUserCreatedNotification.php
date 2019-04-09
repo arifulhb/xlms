@@ -49,12 +49,12 @@ class NewUserCreatedNotification extends Notification implements ShouldQueue
         $actionUrl = url( "/password/reset/$this->token?new=$email");
 
         $departments = [];
-        foreach($user->departments as $item){
+        foreach($this->user->departments as $item){
             array_push($departments, $item->name);
         }
 
         $jobroles = [];
-        foreach($user->jobroles as $item){
+        foreach($this->user->jobroles as $item){
             array_push($jobroles, $item->name);
         }
 
@@ -67,9 +67,9 @@ class NewUserCreatedNotification extends Notification implements ShouldQueue
                             'actionUrl' => $actionUrl, 'actionText' => 'Set Password',
                             'name' => $this->user->name,
                             'batch_no' => $this->user->username,
-                            'department' => implode(',', $departments),
-                            'jobrole'  => implod('', $jobroles),
-                            'role'  => $user->roles->toArray()[0]['name']
+                            'department' => implode(', ', $departments),
+                            'jobrole'  => implode(', ', $jobroles),
+                            'role'  => $this->user->roles->toArray()[0]['name']
                         ]);
     }
 

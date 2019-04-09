@@ -102,7 +102,9 @@ class UserController extends Controller
             'email'     => 'required|email|max:100|unique:users,email',
             'name'      => 'required|string|max:100',
             'username'  => 'required|string|max:100|unique:users,username,',
-            'role'      => 'required|string'
+            'role'      => 'required|string',
+            'department'=> 'required_if:role,Admin,Student',
+            'job_role'  => 'required_if:role,Admin,Student'
         ]);
 
         if ($validator->fails()) {
@@ -119,6 +121,10 @@ class UserController extends Controller
         $user->username     = $post['username'];
         $user->status       = \USER_STATUS_PENDING;
         $user->password     = bcrypt('secret');
+
+        if($post['role'] == 'Instructor'){
+            $user->expertise     = $post['expertise'];
+        }
         $user->save();
 
         $user->assignRole($post['role']);
@@ -149,18 +155,24 @@ class UserController extends Controller
         }
 
         $post = $request->all();
-
-
         $user = User::find($id);
+
+        $role_permission = $user->roles->toArray()[0]['name'];
 
         $user->name = $post['name'];
         $user->email = $post['email'];
         $user->username = $post['username'];
+        if($role_permission== 'Instructor'){
+            $user->expertise     = $post['expertise'];
+        }
         $user->save();
 
 
-        $user->departments()->syncWithoutDetaching([$post['department']]);
-        $user->jobroles()->syncWithoutDetaching([$post['job_role']]);
+        if($role_permission== 'Admin' || $role_permission == 'Student'){
+            $user->departments()->syncWithoutDetaching([$post['department']]);
+            $user->jobroles()->syncWithoutDetaching([$post['job_role']]);
+        }
+
 
         Session::flash('message', 'User updated!');
         Session::flash('alert-class', 'alert-success');
