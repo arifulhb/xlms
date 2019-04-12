@@ -11,12 +11,12 @@
                 <span class="badge">{{ $role->name }}</span>
             @endforeach
         </p>
-        <a class="dropdown-item" href="instructor-account-edit.html">
+        <a class="dropdown-item" href="{{ route('profile.show') }}">
             <i class="material-icons">edit</i> Edit Account
         </a>
-        <a class="dropdown-item" href="instructor-profile.html">
+        {{-- <a class="dropdown-item" href="instructor-profile.html">
             <i class="material-icons">person</i> Public Profile
-        </a>
+        </a> --}}
         {{-- @todo logout method --}}
         <form method="POST" action="{{ url('/logout')}}">
             {{ csrf_field() }}

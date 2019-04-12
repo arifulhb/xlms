@@ -2,6 +2,14 @@
 
 
 /**
+ * USER ROLES
+ */
+
+ const USER_ROLE_ADMIN = 'Admin';
+ const USER_ROLE_INSTRUCTOR = 'Instructor';
+ const USER_ROLE_STUDENT = 'Trainee';
+
+/**
  * USER Constants
  */
 const USER_STATUS_SUSPENDED = 0;

@@ -40,3 +40,12 @@ Route::group(['prefix' => 'job-roles', 'as' => 'jobrole.'], function(){
     Route::delete('/{id}', 'JobRoleController@delete')->name('delete');
 
 });
+
+
+Route::group(['prefix' => 'profile', 'as' => 'profile.'], function(){
+
+    Route::get('/', 'ProfileController@index')->name('show');
+    Route::post('/', 'ProfileController@update')->name('update');
+    Route::post('/change-password', 'ProfileController@changePassword')->name('change.password');
+
+});
