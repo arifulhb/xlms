@@ -1,4 +1,7 @@
-<ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="instructor-dashboard.html">Home</a></li>
-    <li class="breadcrumb-item active">Dashboard</li>
-</ol>
+@section('breadcrumb')
+    @isset($model)
+    {{ Breadcrumbs::render(isset($breadcrumb) ? $breadcrumb : 'dashboard', $model ) }}
+@else
+    {{ Breadcrumbs::render(isset($breadcrumb) ? $breadcrumb : 'dashboard' ) }}
+    @endif
+@endsection

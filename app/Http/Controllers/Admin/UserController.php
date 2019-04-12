@@ -77,6 +77,7 @@ class UserController extends Controller
 
         $return['title'] = 'Users';
         $return['users'] = $users;
+        $return['breadcrumb'] = 'users';
         $return['roles'] = Role::all();
 
         return view('admin.users.index', $return);
@@ -91,6 +92,7 @@ class UserController extends Controller
         $return['roles'] = Role::all();
         $return['departments'] = $departments;
         $return['job_roles'] = $job_roles;
+        $return['breadcrumb'] = 'users_new';
 
         return view('admin.users.insert', $return);
 
@@ -196,6 +198,7 @@ class UserController extends Controller
         $return['title'] = 'Edit: '.$user->name;
         $return['user'] = $user;
         $return['departments'] = $departments;
+        $return['breadcrumb'] = 'users_show';
         $return['job_roles'] = $job_roles;
         $return['roles'] = Role::all();
 

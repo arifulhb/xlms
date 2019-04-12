@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Dashboard
+ */
+
+Route::get('/', function(){
+    return redirect('/dashboard');
+})->name('admin');
+
+Route::get('/dashboard', function(){
+
+    echo 'Dashboard';
+})->name('dashboard');
 
 /**
  * User Management

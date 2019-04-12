@@ -34,6 +34,7 @@ class JobRoleController extends Controller
 
         $return['title'] = 'Job Roles';
         $return['job_roles'] = $jobRoles;
+        $return['breadcrumb'] = 'jobroles';
 
         return view('admin.jobrole.index', $return);
 
@@ -42,6 +43,7 @@ class JobRoleController extends Controller
     public function add(){
 
         $return['title'] = 'Add new Job Role';
+        $return['breadcrumb'] = 'jobroles_new';
 
         return view('admin.jobrole.insert', $return);
 
@@ -113,6 +115,7 @@ class JobRoleController extends Controller
         $jr = JobRole::find($id);
 
         $return['title'] = 'Edit: '.$jr->name;
+        $return['breadcrumb'] = 'jobroles_edit';
         $return['job_role'] = $jr;
 
 

@@ -41,6 +41,7 @@ class ProfileController extends Controller
         $return['title'] = 'My Profile';
         $return['user'] = Auth::user();
         $return['roles'] = Role::all();
+        $return['breadcrumb'] = 'profile';
         $return['job_roles'] = JobRole::orderBy('name', 'asc')->get();
         $return['departments'] = Department::orderBy('name', 'asc')->get();
 
