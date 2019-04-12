@@ -37,7 +37,10 @@
 
                 <div class="mdk-drawer-layout__content page ">
                     <div class="container-fluid">
-                        @include('parts.app.body.breadcrumb')
+
+                        @yield('breadcrumb')
+                        {{-- @include('parts.app.body.breadcrumb') --}}
+
                         @include('parts.app.body.headline')
                         @yield('content')
                     </div>

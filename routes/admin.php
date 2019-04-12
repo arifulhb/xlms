@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Dashboard
+ */
+
+Route::get('/', function(){
+    return redirect('/dashboard');
+})->name('admin');
+
+Route::get('/dashboard', function(){
+
+    echo 'Dashboard';
+})->name('dashboard');
 
 /**
  * User Management
@@ -38,5 +50,14 @@ Route::group(['prefix' => 'job-roles', 'as' => 'jobrole.'], function(){
     Route::post('/', 'JobRoleController@insert')->name('insert');
     Route::put('/{id}', 'JobRoleController@update')->name('update');
     Route::delete('/{id}', 'JobRoleController@delete')->name('delete');
+
+});
+
+
+Route::group(['prefix' => 'profile', 'as' => 'profile.'], function(){
+
+    Route::get('/', 'ProfileController@index')->name('show');
+    Route::post('/', 'ProfileController@update')->name('update');
+    Route::post('/change-password', 'ProfileController@changePassword')->name('change.password');
 
 });

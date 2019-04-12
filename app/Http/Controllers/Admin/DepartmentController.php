@@ -34,6 +34,7 @@ class DepartmentController extends Controller
 
         $return['title'] = 'Departments';
         $return['departments'] = $departments;
+        $return['breadcrumb'] = 'departments';
 
         return view('admin.department.index', $return);
     }
@@ -41,6 +42,7 @@ class DepartmentController extends Controller
     public function add(){
 
         $return['title'] = 'Add new Uepartment';
+        $return['breadcrumb'] = 'departments_new';
 
         return view('admin.department.insert', $return);
 
@@ -113,6 +115,7 @@ class DepartmentController extends Controller
 
         $return['title'] = 'Edit: '.$dept->name;
         $return['department'] = $dept;
+        $return['breadcrumb'] = 'departments_edit';
 
 
         return view('admin.department.edit', $return);
