@@ -29,7 +29,7 @@
                     @component('parts.components.form-group',
                         ['name' => 'name', 'icon_name' => 'person', 'column' => 'col-sm-8 col-md-6'])
                         <input type="text" id="name" class="form-control" name="name"
-                        placeholder="Name" value="{{ old('name') ? old('name') : isset($user) ? $user->name : ''}}">
+                        placeholder="Name" value="{{ old('name') ? old('name') : ''}}{{ isset($user) ? $user->name : '' }}">
                     @endcomponent
 
                     <div class="form-group row">
@@ -56,13 +56,13 @@
                     @component('parts.components.form-group',
                         ['name' => 'email', 'icon_name' => 'mail', 'column' => 'col-sm-6 col-md-6'])
                         <input type="email" id="email" class="form-control" name="email"
-                        placeholder="Email Address" value="{{  old('email') ? old('email') : isset($user) ? $user->email : '' }}">
+                placeholder="Email Address" value="{{  old('email') ? old('email') : '' }}{{ isset($user) ? $user->email : '' }}">
                     @endcomponent
 
                     @component('parts.components.form-group',
                         ['name' => 'username', 'icon_name' => 'alternate_email', 'column' => 'col-sm-6 col-md-6'])
                         <input id="username" type="text" class="form-control" name="username"
-                        placeholder="username" value="{{ old('username') ? old('username') : isset($user) ? $user->username : '' }}">
+                        placeholder="username" value="{{ old('username') ? old('username') : ''}}{{  isset($user) ? $user->username : '' }}">
                     @endcomponent
 
 
@@ -116,7 +116,8 @@
                     @component('parts.components.form-group',
                         ['name' => 'expertise', 'icon_name' => 'highlight', 'column' => 'col-sm-8 col-md-6'])
                         <input type="text" id="expertise" class="form-control" name="expertise"
-                        placeholder="e.g. Expertise1, Expertise2" value="{{ old('expertise') ? old('expertise') : isset($user) ? $user->expertise : ''}}">
+                        placeholder="e.g. Expertise1, Expertise2"
+                        value="{{ old('expertise') ? old('expertise') : ''}}{{ isset($user) ? $user->expertise : '' }}">
                     @endcomponent
                     </div>
 
