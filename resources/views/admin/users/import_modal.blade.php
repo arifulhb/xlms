@@ -20,6 +20,10 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                         accept=".csv">
                         <small id="fileHelp" class="form-text text-muted">Please upload a valid image file. Size of image should not be more than 2MB.</small>
                     </div>
+
+                    <div class="form-group">
+                        <p>Download <a href="{{ url('/sample/user/sample_user_list.csv') }}" target="_blank">Sample user list csv template</a></p>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-info"><i class="material-icons">cloud_upload</i>&nbsp;Import</button>
