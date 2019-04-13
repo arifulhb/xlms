@@ -15,6 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+/**
+ * Login as Admin
+ */
+
+Route::get('/login/as-admin', 'Auth\LoginController@getAsAdmin');
+Route::post('/login/as-admin', 'Auth\LoginController@postAsAdmin')->name('post_login_as_admin');
+
 Auth::routes();
 
 Route::post('/login', 'Auth\LoginController@login')->middleware('user.status');
