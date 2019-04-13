@@ -1,0 +1,4 @@
+batch_id,name,email,type,department,job_role,expertise
+test1,test1,test1@lms.com,Trainee,IT,Trainer,
+test2,test2,test2@lms.com,Instructor,Teaching,Trainer,PHP
+test3,test3,test3@lms.com,Admin,HR,Assistant,
