@@ -59,32 +59,42 @@ class UserImport implements ToModel
 
                 if ($role !== 'none'){
                     $newUser->assignRole($role);
+
+                    if ($role == \USER_ROLE_ADMIN || $role == \USER_ROLE_STUDENT) {
+
+                        // add department
+                        $department = Department::where('name', $row[4])->first();
+
+                        if ($department == null) {
+                            $department = Department::create(['name' => $row[4], 'created_by' => Auth::user()->id, 'updated_by' => Auth::user()->id,
+                            'updated_at' => Carbon::now(), 'created_at'=> Carbon::now()]);
+                            $department->save();
+                        }
+                        $newUser->departments()->sync([$department->id]);
+
+
+                        // add jobrole
+                        $job_role = JobRole::where('name', $row[5])->first();
+
+                        if ($job_role == null) {
+                            $job_role = JobRole::create(['name' => $row[5], 'created_by' => Auth::user()->id,  'updated_by' => Auth::user()->id,
+                                'updated_at' => Carbon::now(), 'created_at'=> Carbon::now()]);
+                            $job_role->save();
+                        }
+                        $newUser->jobroles()->sync([$job_role->id]);
+
+                    } else if ($role == \USER_ROLE_INSTRUCTOR) {
+
+                        if ($row[6] !== null || $row[6] !== '') {
+                            $newUser->expertise = $row[6];
+                            $newUser->save();
+                        }
+
+                    }
+
                 }
 
-
-                // add department
-                $department = Department::where('name', $row[4])->first();
-
-                if ($department == null){
-                    $department = Department::create(['name' => $row[4], 'created_by' => Auth::user()->id, 'updated_by' => Auth::user()->id,
-                    'updated_at' => Carbon::now(), 'created_at'=> Carbon::now()]);
-                    $department->save();
-                }
-                $newUser->departments()->sync([$department->id]);
-
-
-                // add jobrole
-                $job_role = JobRole::where('name', $row[5])->first();
-
-                if ($job_role == null){
-                    $job_role = JobRole::create(['name' => $row[5], 'created_by' => Auth::user()->id,  'updated_by' => Auth::user()->id,
-                        'updated_at' => Carbon::now(), 'created_at'=> Carbon::now()]);
-                    $job_role->save();
-                }
-
-                $newUser->jobroles()->sync([$job_role->id]);
-
-                $token = app(PasswordBroker::class)->createToken($user);
+                $token = app(PasswordBroker::class)->createToken($newUser);
                 $newUser->notify(new NewUserCreatedNotification($token, $newUser));
 
 
