@@ -26,6 +26,8 @@
                 </div>
 
                 </form>
+                <button class="btn btn-info btn-sm mr-2" type="button"  data-toggle="modal"
+                data-target="#user_import_modal"><i class="material-icons">cloud_circle</i>&nbsp; Import Users</button>
                 <a href="{{ route('users.new') }}" class="btn btn-sm btn-primary">
                     <i class="material-icons">person_add</i>&nbsp;Add New
                 </a>
@@ -138,4 +140,5 @@
 
 @push('footer-html')
 @include('admin.users.delete_modal')
+@include('admin.users.import_modal')
 @endpush

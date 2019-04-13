@@ -227,7 +227,7 @@ $(document).ready(function(){
 
         console.log('role ', user_role);
 
-        if (user_role === 'Admin' || user_role=== 'Student'){
+        if (user_role === 'Admin' || user_role=== 'Trainee'){
             $('.js-admin,  .js-student').removeClass('d-none');
             $('.js-instructor').addClass('d-none');
         } else if (user_role === 'Instructor'){

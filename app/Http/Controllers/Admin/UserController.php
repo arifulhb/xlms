@@ -7,10 +7,12 @@ use App\User;
 use App\JobRole;
 use Carbon\Carbon;
 use App\Department;
+use App\Import\UserImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Notification;
@@ -107,8 +109,8 @@ class UserController extends Controller
             'name'      => 'required|string|max:100',
             'username'  => 'required|string|max:100|unique:users,username,',
             'role'      => 'required|string',
-            'department'=> 'required_if:role,Admin,Student',
-            'job_role'  => 'required_if:role,Admin,Student'
+            'department'=> 'required_if:role,Admin,Trainee',
+            'job_role'  => 'required_if:role,Admin,Trainee'
         ]);
 
         if ($validator->fails()) {
@@ -130,7 +132,7 @@ class UserController extends Controller
 
         $user->assignRole($post['role']);
 
-        if($post['role'] == 'Admin' || $post['role'] == 'Student'){
+        if($post['role'] == \USER_ROLE_ADMIN || $post['role'] == \USER_ROLE_STUDENT){
             $user->departments()->syncWithoutDetaching([$post['department']]);
             $user->jobroles()->syncWithoutDetaching([$post['job_role']]);
         }
@@ -175,7 +177,7 @@ class UserController extends Controller
         $user->save();
 
 
-        if($role_permission== 'Admin' || $role_permission == 'Student'){
+        if($role_permission== \USER_ROLE_ADMIN || $role_permission == \USER_ROLE_STUDENT){
             $user->departments()->syncWithoutDetaching([$post['department']]);
             $user->jobroles()->syncWithoutDetaching([$post['job_role']]);
         }
@@ -270,10 +272,25 @@ class UserController extends Controller
     /**
      *
      */
-    public function filter(Request $request){
+    public function import(Request $request){
 
 
-        dd($request->all());
+        $request->validate([
+            'fileToUpload' => 'required|file|max:1024',
+        ]);
+
+        $res = $request->fileToUpload->storeAs( '/user/import', $request->fileToUpload->getClientOriginalName());
+
+        $path = storage_path('app/'.$res);
+
+        // $request->fileToUpload->store('logos');
+        // $path = $request->file('fileToUpload')->getRealPath();
+        // $data = Excel::load($path, function($reader) {})->get();
+
+        Excel::import(new UserImport, $path);
+
+        return back()
+            ->with('success','You have successfully upload image.');
 
     }
 

@@ -86,9 +86,9 @@ class CreatePermissionTables extends Migration
         /**
          * Create 3 default roles
          */
-         $role_admin = Role::create(['name' => 'Admin']);
-         $role_teacher = Role::create(['name' => 'Instructor']);
-         $role_student = Role::create(['name' => 'Student']);
+         $role_admin = Role::create(['name' => USER_ROLE_ADMIN]);
+         $role_teacher = Role::create(['name' => USER_ROLE_INSTRUCTOR]);
+         $role_student = Role::create(['name' => USER_ROLE_STUDENT]);
 
          /**
           * Create associate permissions
@@ -123,7 +123,7 @@ class CreatePermissionTables extends Migration
         $teacher_user = User::where('email', 'teacher@xlms.com')->first();
         $teacher_user->assignRole($role_teacher);
 
-        $student_user = User::where('email', 'student@xlms.com')->first();
+        $student_user = User::where('email', 'trainee@xlms.com')->first();
         $student_user->assignRole($role_student);
 
 

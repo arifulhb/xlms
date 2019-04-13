@@ -22,10 +22,12 @@ Route::group(['prefix' => 'users', 'as' => 'users.', 'middleware' => 'role:Admin
     Route::get('/new', 'UserController@add')->name('new');
     Route::get('/{id}', 'UserController@show')->name('edit');
 
+    Route::post('/import', 'UserController@import')->name('import');
     Route::post('/', 'UserController@insert')->name('insert');
     Route::put('/{id}', 'UserController@update')->name('update');
     Route::put('/{id}/field', 'UserController@updateField')->name('field.update');
     Route::delete('/{id}', 'UserController@delete')->name('delete');
+
 
 });
 
