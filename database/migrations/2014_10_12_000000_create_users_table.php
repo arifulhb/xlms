@@ -60,8 +60,8 @@ class CreateUsersTable extends Migration
          // student
          $student =[
             'name'              => 'Student',
-            'email'             => 'student@xlms.com',
-            'username'          => 'student',
+            'email'             => 'trainee@xlms.com',
+            'username'          => 'trainee',
             'note'              => 'Test student',
             'password'          => bcrypt(env('ADMIN_PASSWORD', '')),
             'status'            => USER_STATUS_ACTIVE,
