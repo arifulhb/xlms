@@ -37,7 +37,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest', ['except' => ['logout', 'postAsUser']]);
     }
 
     public function maxAttempts()
@@ -119,10 +119,34 @@ class LoginController extends Controller
             ->withInput();
     }
 
-    public function setPassword(){
+    public function postAsUser(Request $request){
 
 
+        if (Auth::user()->hasRole(\USER_ROLE_ADMIN)){
 
+
+            $post = $request->all();
+            Auth::logout();
+
+            $user = User::where('id', $post['user_id'])->first();
+            Auth::loginUsingId($user->id, TRUE);
+
+            return redirect()->intended($this->redirectPath());
+
+        } else {
+            /**
+             * If user is not an admin,
+             * >> logout and redirect back with error message
+             */
+
+            Auth::logout();
+
+            // Redirect
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'User is not an Admin');
+        }
 
     }
 }
