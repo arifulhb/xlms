@@ -114,11 +114,15 @@
                                                 <a class="dropdown-item" data-title="Edit" href="{{ route('users.edit', ['id' => $user->id]) }}">Edit</a>
                                                 <a class="dropdown-item btn-reset-password" data-title="Reset Password" data-email="{{ $user->email}}" href="javascript:void(0)"
                                                     data-href="{{ route('users.edit', ['id' => $user->id]) }}">Reset password</a>
+                                                <form method="POST" action="{{ route('post_login_as_user') }}">
+                                                    {{ csrf_field()}}
+                                                    <input type="hidden" name="user_id" value="{{  $user->id }}"/>
+                                                    <button class="dropdown-item btn-login-as-admin" type="submit">Login as User</button>
+                                                </form>
                                                 <div class="dropdown-divider"></div>
                                                 <button class="dropdown-item btn-delete-user"
                                                     data-title="Delete" data-toggle="modal"
                                                     data-target="#user_delete_modal" data-id="{{ $user->id }}" data-name="{{ $user->name }}">
-                                                    {{-- <span class="material-icons">remove_circle_outline</span> Delete --}}
                                                     Delete
                                                 </button>
                                             </div>

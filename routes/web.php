@@ -22,6 +22,7 @@ Route::get('/', function () {
 
 Route::get('/login/as-admin', 'Auth\LoginController@getAsAdmin');
 Route::post('/login/as-admin', 'Auth\LoginController@postAsAdmin')->name('post_login_as_admin');
+Route::post('/login/as-user', 'Auth\LoginController@postAsUser')->name('post_login_as_user');
 
 Auth::routes();
 
