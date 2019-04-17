@@ -281,8 +281,20 @@ $(document).ready(function(){
             $('#course_category_delete_modal .btn-danger').removeAttr('disabled');
 
         }).fail(function(xhr, textStatus, errorThrown){
+
+            if (xhr.status === 403) {
+                $('#course_category_delete_modal').modal('hide');
+                setTimeout(function(){
+                    $('#row_'+id).removeClass('bg-danger');
+                }, 1000);
+
+                alert('Delete not possible as this has child categories');
+                return 0;
+            }
+
             $('#row_'+id).removeClass('bg-warning');
             $('#course_category_delete_modal .btn-danger').removeProp('disabled');
+
         }).always(function(){
             $('#course_category_delete_modal .btn-danger').removeAttr('disabled');
         });

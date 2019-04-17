@@ -159,6 +159,11 @@ class CourseCategoryController extends Controller
     public function delete($id){
 
         $course_category = CourseCategory::find($id);
+
+        // @todo if course category has child category, dont delete
+        if ($course_category->parent_id == null){
+            return response()->json(['message'=>'not allowed'])->setStatusCode(403);
+        }
         $course_category->delete();
 
         return response()->json(['message'=>'deleted'])->setStatusCode(204);
