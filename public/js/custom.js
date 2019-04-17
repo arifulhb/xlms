@@ -240,4 +240,68 @@ $(document).ready(function(){
 
 
 
+     $('.btn-delete-course-category').click(function() {
+
+        var data = {
+            id : $(this).attr('data-id'),
+            name: $(this).attr('data-name')
+        } ;
+
+        $('#row_'+data.id).addClass('bg-warning');
+
+        $('#course_category_delete_modal .btn-danger').attr('data-id', data.id);
+        $('#course_category_delete_modal .modal-body').html("Are you sure to delete <strong class='text-danger'>"+data.name+"</strong>?");
+
+    });
+
+
+     /**
+     * Department Course Category
+     */
+    $('#course_category_delete_modal .btn-danger').click(function(){
+
+        $(this).attr('disabled', 'disabled');
+        var id = $(this).attr('data-id');
+        $('#row_'+id).addClass('bg-danger');
+
+        $.ajax({
+            url: '/admin/course-categories/'+id,
+            type: 'post',
+            data: {
+                "_method": 'DELETE',
+            },
+        }).done(function(response, textStatus, xhr){
+
+            if (xhr.status === 204){
+                $('#course_category_delete_modal').modal('hide');
+                setTimeout(function(){
+                    $('#row_'+id).remove();
+                }, 1000);
+            }
+            $('#course_category_delete_modal .btn-danger').removeAttr('disabled');
+
+        }).fail(function(xhr, textStatus, errorThrown){
+
+            if (xhr.status === 403) {
+                $('#course_category_delete_modal').modal('hide');
+                setTimeout(function(){
+                    $('#row_'+id).removeClass('bg-danger');
+                }, 1000);
+
+                alert('Delete not possible as this has child categories');
+                return 0;
+            }
+
+            $('#row_'+id).removeClass('bg-warning');
+            $('#course_category_delete_modal .btn-danger').removeProp('disabled');
+
+        }).always(function(){
+            $('#course_category_delete_modal .btn-danger').removeAttr('disabled');
+        });
+
+
+    });
+
+
+
 });

@@ -70,3 +70,23 @@ Breadcrumbs::for('jobroles_edit', function ($trail, $model) {
     $trail->parent('jobroles');
     $trail->push('Edit Job Role: '.$model->name, route('jobrole.edit', ['id' => $model->id]));
 });
+
+/**
+ * course_category
+ */
+
+Breadcrumbs::for('course_category', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Coures category', route('course_category.all'));
+});
+
+
+Breadcrumbs::for('course_category_new', function ($trail) {
+    $trail->parent('course_category');
+    $trail->push('Add New', route('course_category.new'));
+});
+
+Breadcrumbs::for('course_category_edit', function ($trail, $model) {
+    $trail->parent('course_category');
+    $trail->push('Edit Course Category: '.$model->name, route('course_category.edit', ['id' => $model->id]));
+});
