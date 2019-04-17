@@ -63,7 +63,6 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapInstructorRoutes();
 
-
         $this->mapStudentRoutes();
 
     }
