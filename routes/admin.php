@@ -63,3 +63,15 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.'], function(){
     Route::post('/change-password', 'ProfileController@changePassword')->name('change.password');
 
 });
+
+
+Route::group(['prefix' => 'course-categories', 'as' => 'course_category.'], function(){
+
+    Route::get('/', 'CourseCategoryController@index')->name('all');
+    Route::get('/new', 'CourseCategoryController@add')->name('new');
+    Route::get('/{id}', 'CourseCategoryController@show')->name('edit');
+    Route::post('/', 'CourseCategoryController@insert')->name('insert');
+    Route::put('/{id}', 'CourseCategoryController@update')->name('update');
+    Route::delete('/{id}', 'CourseCategoryController@delete')->name('delete');
+
+});
