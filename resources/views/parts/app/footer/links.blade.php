@@ -114,6 +114,16 @@
         })()
     </script> --}}
 
+    {{-- Quill --}}
+    <script src="{{ asset('template/assets/vendor/jquery.nestable.js') }}"></script>
+    <script src="{{ asset('template/assets/js/nestable.js') }}"></script>
+
+
+     {{-- Quill --}}
+    <script src="{{ asset('template/assets/vendor/quill.min.js') }}"></script>
+    <script src="{{ asset('template/assets/js/quill.js') }}"></script>
+
+
     <!-- List.js -->
     {{-- <script src="{{ asset('template/assets/vendor/list.min.js') }}"></script> --}}
     {{-- <script src="{{ asset('template/assets/js/list.js') }}"></script> --}}

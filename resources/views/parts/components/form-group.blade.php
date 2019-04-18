@@ -1,5 +1,5 @@
 <div class="form-group row">
-    <label for="{{$name}}" class="col-sm-3 col-form-label form-label">{{ ucfirst(str_replace('_', ' ', $name)) }}</label>
+    <label for="{{$name}}" class="col-sm-12 col-lg-6 col-md-6 col-form-label form-label">{{ ucfirst(str_replace('_', ' ', $name)) }}</label>
     <div class="{{ isset($column) ? $column : 'col-sm-6 col-md-6' }}">
         <div class="input-group  {{ $errors->has($name) ? 'invalid-feedback'  : '' }}">
             @isset($icon_name)

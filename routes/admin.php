@@ -75,3 +75,15 @@ Route::group(['prefix' => 'course-categories', 'as' => 'course_category.'], func
     Route::delete('/{id}', 'CourseCategoryController@delete')->name('delete');
 
 });
+
+
+Route::group(['prefix' => 'courses', 'as' => 'course.'], function(){
+
+    Route::get('/', 'CourseController@index')->name('all');
+    Route::get('/new', 'CourseController@add')->name('new');
+    Route::get('/{id}', 'CourseController@show')->name('edit');
+    Route::post('/', 'CourseController@insert')->name('insert');
+    Route::put('/{id}', 'CourseController@update')->name('update');
+    Route::delete('/{id}', 'CourseController@delete')->name('delete');
+
+});
