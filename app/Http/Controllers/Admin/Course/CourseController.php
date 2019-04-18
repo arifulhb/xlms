@@ -48,6 +48,7 @@ class CourseController extends Controller
      */
     public function insert(Request $request){
 
+        dd($request->all());
         $validator = Validator::make($request->all(), [
             'name'      => 'required|string|max:100|unique:course_categories,name',
             'slug'      => 'required|string|max:100|unique:course_categories,slug',
