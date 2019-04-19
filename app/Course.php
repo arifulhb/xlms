@@ -50,7 +50,7 @@ class Course extends Model
 
     }
 
-    public function catgories(){
+    public function categories(){
 
         return $this->belongsToMany(CourseCategory::class, 'course_category_pivot', 'course_id', 'course_category_id');
 

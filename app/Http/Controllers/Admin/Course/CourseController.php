@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\User;
 use App\Course;
 use App\CourseCategory;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CourseController extends Controller
 {
@@ -34,9 +38,12 @@ class CourseController extends Controller
 
         // @todo can add cache in Course category for better performance
         $root = CourseCategory::renderAsArray();
+        $authors = User::role(\USER_ROLE_INSTRUCTOR)->get();
 
         $return['title'] = 'Add new Course';
         $return['categories'] = $root;
+        $return['authors'] = $authors;
+
         $return['breadcrumb'] = 'course_new';
 
         return view('admin.course.crud.insert', $return);
@@ -48,41 +55,60 @@ class CourseController extends Controller
      */
     public function insert(Request $request){
 
-        dd($request->all());
-        $validator = Validator::make($request->all(), [
-            'name'      => 'required|string|max:100|unique:course_categories,name',
-            'slug'      => 'required|string|max:100|unique:course_categories,slug',
-            'description' => 'max:256,',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'name'      => 'required|string|max:100|unique:course_categories,name',
+        //     'slug'      => 'required|string|max:100|unique:course_categories,slug',
+        //     'description' => 'max:256,',
+        // ]);
 
-        if ($validator->fails()) {
-            Session::flash('errors', $validator->messages());
-            return redirect()->route('course_category.new')->withInput();
-        }
+        // if ($validator->fails()) {
+        //     Session::flash('errors', $validator->messages());
+        //     return redirect()->route('course_category.new')->withInput();
+        // }
 
         $post = $request->all();
 
-        $course_category = new CourseCategory();
-        $course_category->name         = $post['name'];
-        $course_category->slug         = Str::slug($post['slug'], '-');
-        if(isset($post['description'])){
-           $course_category->description        = $post['description'];
+        $course = new Course();
+        $course->name         = $post['title'];
+        $course->brief         = $post['tagline'];
+
+        $course->slug         = Str::slug($post['title'], '-');
+
+        if (isset($post['introduction'])) {
+           $course->introduction        = $post['introduction'];
         }
 
-        if (is_numeric($post['parent_id'])) {
-            $course_category->parent_id        = $post['parent_id'];
-        } else {
-            $course_category->parent_id = null;
+        if (isset($post['outline'])) {
+            $course->structure        = $post['outline'];
         }
 
-        $course_category->created_by   = Auth::user()->id;
-        $course_category->updated_by   = Auth::user()->id;
-        $course_category->save();
+        if (isset($post['keytakeaway'])) {
+            $course->key_takeaway        = $post['keytakeaway'];
+        }
 
-        Session::flash('message', 'Course Category created!');
+        $course->difficulty_level = $post['difficulty'];
+
+        $course->status = \COURSE_STATUS_DRAFT;
+        $course->language = "English";
+
+        $course->author_id = $post['author'];
+
+        if (isset($post['duration'])) {
+           $course->hours = $post['duration'];
+        }
+
+
+        $course->created_by   = Auth::user()->id;
+        $course->updated_by   = Auth::user()->id;
+        $course->save();
+
+        // save the category here
+        $course->categories()->attach($post['categories']);
+
+        Session::flash('message', 'Course created!');
         Session::flash('alert-class', 'alert-success');
 
-        return redirect()->route('course_category.edit', ['id'=> $course_category->id]);
+        return redirect()->route('course.edit', ['id'=> $course->id]);
 
     }
 
@@ -134,16 +160,19 @@ class CourseController extends Controller
      */
     public function show($id){
 
-        $course_category = CourseCategory::find($id);
-        $root = CourseCategory::where('parent_id', null)->get();
+        $course     = Course::find($id);
 
-        $return['title'] = 'Edit: '.$course_category->name;
-        $return['root_categories'] = $root;
-        $return['course_category'] = $course_category;
-        $return['breadcrumb'] = 'course_category_edit';
+        $root       = CourseCategory::renderAsArray();
+        $authors    = User::role(\USER_ROLE_INSTRUCTOR)->get();
 
+        $return['title']        = 'Edit: '.$course->title;
+        $return['categories']   = $root;
+        $return['authors']      = $authors;
+        $return['course']       = $course;
+        $return['breadcrumb']   = 'course_edit';
 
-        return view('admin.course.category.edit', $return);
+        return view('admin.course.crud.edit', $return);
+
     }
 
     /**
