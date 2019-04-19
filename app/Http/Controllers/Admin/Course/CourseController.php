@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
@@ -55,16 +56,22 @@ class CourseController extends Controller
      */
     public function insert(Request $request){
 
-        // $validator = Validator::make($request->all(), [
-        //     'name'      => 'required|string|max:100|unique:course_categories,name',
-        //     'slug'      => 'required|string|max:100|unique:course_categories,slug',
-        //     'description' => 'max:256,',
-        // ]);
+        $validator = Validator::make($request->all(), [
+            'title'         => 'required|string|max:256',
+            'introduction'  => 'required|text',
+            'outline'       => 'required|text',
+            'tagline'       => 'required|string|max:256',
+            'author'        => 'required|exists:users,id',
+            'categories'    => 'required',
+            'difficulty_level' => 'required',
+            'status'        => 'required',
+            'duration'      => 'max:100'
+        ]);
 
-        // if ($validator->fails()) {
-        //     Session::flash('errors', $validator->messages());
-        //     return redirect()->route('course_category.new')->withInput();
-        // }
+        if ($validator->fails()) {
+            Session::flash('errors', $validator->messages());
+            return redirect()->route('course.new')->withInput();
+        }
 
         $post = $request->all();
 
@@ -103,12 +110,16 @@ class CourseController extends Controller
         $course->save();
 
         // save the category here
-        $course->categories()->attach($post['categories']);
+        if (isset($post['categories'])){
+            $course->categories()->attach($post['categories']);
+        }
 
 
-        $course->uploadImage(request()->file('thumbnail'), 'thumbnail');
-        $course->uploadImage(request()->file('thumbnail'), 'thumbnail_small');
-        $course->uploadImage(request()->file('thumbnail'), 'thumbnail_large');
+        if (isset($post['thumbnail'])) {
+            $course->uploadImage(request()->file('thumbnail'), 'thumbnail');
+            $course->uploadImage(request()->file('thumbnail'), 'thumbnail_small');
+            $course->uploadImage(request()->file('thumbnail'), 'thumbnail_large');
+        }
 
         Session::flash('message', 'Course created!');
         Session::flash('alert-class', 'alert-success');

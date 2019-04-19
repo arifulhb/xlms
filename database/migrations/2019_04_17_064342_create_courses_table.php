@@ -19,7 +19,6 @@ class CreateCoursesTable extends Migration
 
             $table->string('name')->index();
             $table->string('brief', 255)->nullable();
-            $table->string('slug', 100)->unique();
 
             // introduction:: brief of the course
             $table->text('introduction')->nullable();

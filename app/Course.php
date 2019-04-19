@@ -107,7 +107,7 @@ class Course extends Model
     }
 
     protected $fillable = [
-        'name', 'brief', 'slug', 'introduction', 'structure', 'hours', 'key_takeaway',
+        'name', 'brief', 'introduction', 'structure', 'hours', 'key_takeaway',
         'thumbnail', 'thumbnail_small', 'thumbnail_large', 'keywords',
         'difficulty_level', 'status', 'language', 'author_id',
         'created_by', 'updated_by'

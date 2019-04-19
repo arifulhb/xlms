@@ -23,23 +23,23 @@
                         placeholder="Course Tagline" value="{{ old('tagline') ? old('tagline') : ''}}{{  isset($course) ? $course->brief : '' }}">
                     @endcomponent
 
-                    <div class="form-group mb-4">
-                        <label class="form-label">Introduction <small class="text-mutted">Course description and overview</small></label>
+                    @component('parts.components.form-group', ['name' => 'introduction', 'column' => 'col-sm-12 col-md-12'])
+                        <small class="text-mutted">Course description and overview</small>
                         <textarea  class="form-control" id="post_introduction" rows="8" placeholder="body"
-                            name="introduction">{{ old('introduction') ? old('introduction') : ''}}{{  isset($course) ? $course->introduction : '' }}</textarea>
-                    </div>
+                        name="introduction">{{ old('introduction') ? old('introduction') : ''}}{{  isset($course) ? $course->introduction : '' }}</textarea>
+                    @endcomponent
 
-                    <div class="form-group mb-4">
-                        <label class="form-label">Outline <small class="text-mutted">Course outline, course flowchart</small></label>
+                    @component('parts.components.form-group', ['name' => 'outline', 'column' => 'col-sm-12 col-md-12'])
+                        <small class="text-mutted">Course outline, course flowchart</small>
                         <textarea  class="form-control" id="post_outline" rows="8" placeholder="Outline"
-                            name="outline">{{ old('outline') ? old('outline') : ''}}{{  isset($course) ? $course->structure : '' }}</textarea>
-                    </div>
+                        name="outline">{{ old('outline') ? old('outline') : ''}}{{  isset($course) ? $course->structure : '' }}</textarea>
+                    @endcomponent
 
-                    <div class="form-group mb-4">
-                        <label class="form-label">Key Takeaway <small class="text-mutted">What student will learn. Bulletpoints only</small></label>
+                    @component('parts.components.form-group', ['name' => 'Key Takeaway', 'column' => 'col-sm-12 col-md-12'])
+                        <small class="text-mutted">What student will learn. Bulletpoints only</small>
                         <textarea  class="form-control" id="post_key_takeaway" rows="8" placeholder="key takeaway"
                             name="keytakeaway">{{ old('keytakeaway') ? old('keytakeaway') : ''}}{{  isset($course) ? $course->key_takeaway : '' }}</textarea>
-                    </div>
+                    @endcomponent
 
                 </div>
             </div>
