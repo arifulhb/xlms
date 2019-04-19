@@ -105,6 +105,11 @@ class CourseController extends Controller
         // save the category here
         $course->categories()->attach($post['categories']);
 
+
+        $course->uploadImage(request()->file('thumbnail'), 'thumbnail');
+        $course->uploadImage(request()->file('thumbnail'), 'thumbnail_small');
+        $course->uploadImage(request()->file('thumbnail'), 'thumbnail_large');
+
         Session::flash('message', 'Course created!');
         Session::flash('alert-class', 'alert-success');
 

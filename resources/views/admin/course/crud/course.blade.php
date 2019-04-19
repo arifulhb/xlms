@@ -1,6 +1,6 @@
 
 <div class="col-lg-12 col-sm-12 col-md-12">
-    <form method="post" action="{{ route('course.insert') }}">
+    <form method="post" action="{{ route('course.insert') }}" enctype="multipart/form-data">
     <div class="row">
 
             {{ csrf_field() }}
@@ -53,7 +53,7 @@
                 </div>
                 <div class="card-body">
                     <p class="text-right">
-                    <button type="submit" class="btn btn-primary"><i class="material-icons">save</i>&nbsp;Save</button>
+                        <button type="submit" class="btn btn-primary"><i class="material-icons">save</i>&nbsp;Save</button>
                     </p>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                 <div class="card-body">
                     <img src="" alt=""
                     class=""/>
-                    <input type="file" class="form-control" />
+                    <input type="file" class="form-control" name="thumbnail"/>
                 </div>
             </div>
 
@@ -86,8 +86,12 @@
                     @endcomponent
 
                     @component('parts.components.form-group', ['name' => 'categories', 'column' => 'col-sm-12 col-md-12'])
+
                     @php
-                        $categoryIds = $course->categories->pluck('id')->toArray();
+                        $categoryIds = [];
+                        if (isset($course)){
+                            $categoryIds = $course->categories->pluck('id')->toArray();
+                        }
                     @endphp
                         <select id="categories" name="categories" class="form-control">
                             @foreach($categories as $head)
