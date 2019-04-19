@@ -2,15 +2,14 @@
 
 namespace App;
 
-use App\User;
 use App\CourseCategory;
-use QCod\ImageUp\HasImageUploads;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
+use QCod\ImageUp\HasImageUploads;
 
 class Course extends Model
 {
     use HasImageUploads;
-
 
     // assuming `users` table has 'cover', 'avatar' columns
     // mark all the columns as image fields
@@ -85,24 +84,27 @@ class Course extends Model
 
             // if request file is don't have same name, default will be the field name
             'file_input' => 'thumbnail',
-        ]
+        ],
     ];
 
     // override cover file name
-    protected function thumbnailSmallUploadFilePath($file) {
+    protected function thumbnailSmallUploadFilePath($file)
+    {
 
-        return $this->id.'/'.$this->id . '-thumbnail_small.jpg';
+        return $this->id . '/' . $this->id . '-thumbnail_small.jpg';
 
     }
 
-    protected function thumbnailLargeUploadFilePath($file) {
+    protected function thumbnailLargeUploadFilePath($file)
+    {
 
-        return $this->id.'/'.$this->id . '-thumbnail_large.jpg';
+        return $this->id . '/' . $this->id . '-thumbnail_large.jpg';
     }
 
-    protected function thumbnailUploadFilePath($file) {
+    protected function thumbnailUploadFilePath($file)
+    {
 
-        return $this->id.'/'.$this->id . '-thumbnail.jpg';
+        return $this->id . '/' . $this->id . '-thumbnail.jpg';
 
     }
 
@@ -110,47 +112,64 @@ class Course extends Model
         'name', 'brief', 'introduction', 'structure', 'hours', 'key_takeaway',
         'thumbnail', 'thumbnail_small', 'thumbnail_large', 'keywords',
         'difficulty_level', 'status', 'language', 'author_id',
-        'created_by', 'updated_by'
+        'created_by', 'updated_by',
     ];
 
-
-    public function author() {
+    public function author()
+    {
 
         return $this->belongsTo(User::class, 'author_id', 'id');
 
     }
 
-
-    public function createdBy() {
+    /**
+     * Created by
+     *
+     * @return App\User
+     */
+    public function createdBy()
+    {
 
         return $this->belongsTo(User::class, 'created_by', 'id');
 
     }
 
-
-    public function updatedBy() {
+    /**
+     * Updated by
+     *
+     * @return App\User
+     */
+    public function updatedBy()
+    {
 
         return $this->belongsTo(User::class, 'updated_by', 'id');
 
     }
 
+    /**
+     * course modules
+     *
+     * @return App\CourseModule
+     */
+    public function modules()
+    {
 
-    public function modules() {
-
+        return $this->hasMany(CourseModule::class, 'course_id', 'id');
     }
 
+
+    public function lessons()
+    {
+
+    }
 
     /**
-     * Course > Module > Lessons
+     *
      */
-    public function lessons() {
-
-    }
-
-    public function categories(){
+    public function categories()
+    {
 
         return $this->belongsToMany(CourseCategory::class, 'course_category_pivot', 'course_id', 'course_category_id');
-
 
     }
 

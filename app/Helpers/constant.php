@@ -82,3 +82,22 @@ const USER_STATUS = [
     1 => 'In Progress',
     5 => 'Complete'
   ];
+
+  /**
+   * Course Lesson Types
+   */
+   const LESSON_TYPES = [
+    1 => 'Video',
+    2 => 'Audio',
+    3 => 'Image',
+    4 => 'Pdf',
+    5 => 'Document',
+    6 => 'Downloadable File'
+   ];
+
+   const LESSON_TYPE_VIDEO = 1;
+   const LESSON_TYPE_AUDIO = 2;
+   const LESSON_TYPE_IMAGE = 3;
+   const LESSON_TYPE_PDF = 4;
+   const LESSON_TYPE_DOCUMENT = 5;
+   const LESSON_TYPE_DOWNLOADABLE_FILE = 6;
