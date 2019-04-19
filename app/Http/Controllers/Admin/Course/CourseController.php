@@ -58,17 +58,17 @@ class CourseController extends Controller
 
         $validator = Validator::make($request->all(), [
             'title'         => 'required|string|max:256',
-            'introduction'  => 'required|text',
-            'outline'       => 'required|text',
+            'introduction'  => 'required',
+            'outline'       => 'required',
             'tagline'       => 'required|string|max:256',
             'author'        => 'required|exists:users,id',
             'categories'    => 'required',
-            'difficulty_level' => 'required',
-            'status'        => 'required',
+            'difficulty'    => 'required',
             'duration'      => 'max:100'
         ]);
 
         if ($validator->fails()) {
+            // dd($validator->messages());
             Session::flash('errors', $validator->messages());
             return redirect()->route('course.new')->withInput();
         }
@@ -79,7 +79,7 @@ class CourseController extends Controller
         $course->name         = $post['title'];
         $course->brief         = $post['tagline'];
 
-        $course->slug         = Str::slug($post['title'], '-');
+        // $course->slug         = Str::slug($post['title'], '-');
 
         if (isset($post['introduction'])) {
            $course->introduction        = $post['introduction'];

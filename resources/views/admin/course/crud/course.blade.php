@@ -55,6 +55,17 @@
                     <p class="text-right">
                         <button type="submit" class="btn btn-primary"><i class="material-icons">save</i>&nbsp;Save</button>
                     </p>
+                    @isset($course)
+                    <p>
+                        @component('parts.components.form-group', ['name' => 'status', 'column' => 'col-sm-12 col-md-12'])
+                        <select id="status" name="status" class="form-control">
+                            @foreach(COURSE_STATUS as $id => $status)
+                                <option value="{{ $id }}" {{ $course->status == $id ? 'SELECTED' : ''}}>{{ $status }}</option>
+                            @endforeach
+                        </select>
+                        @endcomponent
+                    </p>
+                    @endisset
                 </div>
             </div>
 
@@ -64,8 +75,10 @@
                     {{-- <p class="card-subtitle">Extra Options </p> --}}
                 </div>
                 <div class="card-body">
-                    <img src="" alt=""
+                    {{-- @isset($course) --}}
+                    <img src="{{ asset('storage/'.$course->thumbnail_small) }}" alt="img"
                     class=""/>
+                    {{-- @endisset --}}
                     <input type="file" class="form-control" name="thumbnail"/>
                 </div>
             </div>
