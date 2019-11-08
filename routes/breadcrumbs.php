@@ -90,3 +90,24 @@ Breadcrumbs::for('course_category_edit', function ($trail, $model) {
     $trail->parent('course_category');
     $trail->push('Edit Course Category: '.$model->name, route('course_category.edit', ['id' => $model->id]));
 });
+
+
+/**
+ * course
+ */
+
+Breadcrumbs::for('course', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Coures', route('course.all'));
+});
+
+
+Breadcrumbs::for('course_new', function ($trail) {
+    $trail->parent('course');
+    $trail->push('Add New', route('course.new'));
+});
+
+Breadcrumbs::for('course_edit', function ($trail, $model) {
+    $trail->parent('course');
+    $trail->push('Edit Course: '.$model->name, route('course.edit', ['id' => $model->id]));
+});
